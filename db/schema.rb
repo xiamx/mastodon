@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_10_110808) do
+ActiveRecord::Schema.define(version: 2020_05_22_230224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -278,6 +278,16 @@ ActiveRecord::Schema.define(version: 2020_05_10_110808) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uri"], name: "index_conversations_on_uri", unique: true
+  end
+
+  create_table "cross_site_subscriptions", force: :cascade do |t|
+    t.string "site"
+    t.string "foreign_user_id"
+    t.string "state"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_cross_site_subscriptions_on_user_id"
   end
 
   create_table "custom_emoji_categories", force: :cascade do |t|
@@ -698,8 +708,8 @@ ActiveRecord::Schema.define(version: 2020_05_10_110808) do
   create_table "status_pins", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "status_id", null: false
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["account_id", "status_id"], name: "index_status_pins_on_account_id_and_status_id", unique: true
   end
 

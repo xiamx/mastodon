@@ -1,0 +1,16 @@
+- content_for :page_title do
+  = t('cross_site_subscribes.create_cross_site_subscribes', title: site_title)
+
+= simple_form_for(@cross_site_subscription, url: cross_site_subscribes_path) do |f|
+  = render 'shared/error_messages', object: @cross_site_subscription
+
+  .fields-group
+    = f.input :site, wrapper: :with_label, prompt: I18n.t('cross_site_subscribes.site_name'), input_html: {readonly: :true}
+
+    = f.input :foreign_user_id, wrapper: :with_label, prompt: I18n.t('cross_site_subscribes.user_handle')
+
+  .actions
+    = f.button :button, t('cross_site_subscribes.subscribe'), type: :submit
+
+
+

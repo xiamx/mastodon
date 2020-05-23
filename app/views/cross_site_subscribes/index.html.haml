@@ -1,0 +1,25 @@
+- content_for :page_title do
+  = t('cross_site_subscribes.manage_cross_site_subscribes', title: site_title)
+
+%p= link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
+
+.simple_form
+  %table.table.table--invites
+    %thead
+      %tr
+        %th
+        %th= t('cross_site_subscribes.table.site')
+        %th= t('cross_site_subscribes.table.foreign_user_id')
+        %th= t('cross_site_subscribes.table.add_by')
+        %th
+    %tbody
+      - @cross_site_subscriptions.each do |subscription|
+        %tr
+          %td= subscription.id
+          %td= subscription.site
+          %td= subscription.foreign_user_id
+          %td= subscription.user.account.username
+          %td
+
+= paginate @cross_site_subscriptions
+
