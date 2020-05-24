@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_22_230224) do
+ActiveRecord::Schema.define(version: 2020_05_24_162502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -708,8 +708,8 @@ ActiveRecord::Schema.define(version: 2020_05_22_230224) do
   create_table "status_pins", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "status_id", null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["account_id", "status_id"], name: "index_status_pins_on_account_id_and_status_id", unique: true
   end
 
@@ -782,6 +782,17 @@ ActiveRecord::Schema.define(version: 2020_05_22_230224) do
     t.boolean "by_moderator"
     t.index ["account_id"], name: "index_tombstones_on_account_id"
     t.index ["uri"], name: "index_tombstones_on_uri"
+  end
+
+  create_table "tweets", force: :cascade do |t|
+    t.bigint "tweet_id", null: false
+    t.bigint "account_id"
+    t.string "full_text"
+    t.jsonb "payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "published_at"
+    t.index ["account_id"], name: "index_tweets_on_account_id"
   end
 
   create_table "unavailable_domains", force: :cascade do |t|
@@ -947,6 +958,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_230224) do
   add_foreign_key "statuses_tags", "statuses", on_delete: :cascade
   add_foreign_key "statuses_tags", "tags", name: "fk_3081861e21", on_delete: :cascade
   add_foreign_key "tombstones", "accounts", on_delete: :cascade
+  add_foreign_key "tweets", "accounts", on_delete: :cascade
   add_foreign_key "user_invite_requests", "users", on_delete: :cascade
   add_foreign_key "users", "accounts", name: "fk_50500f500d", on_delete: :cascade
   add_foreign_key "users", "invites", on_delete: :nullify
