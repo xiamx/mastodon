@@ -74,6 +74,7 @@ class CrossSiteTwitter
     user.save!
     user.confirmed_at = nil
     user.confirm!
+    user.approve!
 
     account
   end
