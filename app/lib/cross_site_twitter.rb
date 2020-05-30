@@ -47,24 +47,24 @@ class CrossSiteTwitter
     account = Account.new(username: twitter_user.screen_name)
     password = SecureRandom.hex
     user     = User.new(
-        email: "twitter_user_#{twitter_user.screen_name}@m.gretaoto.ca",
-        password: password,
-        agreement: true,
-        approved: true,
-        admin: false,
-        moderator: false,
-        confirmed_at: nil
+      email: "twitter_user_#{twitter_user.screen_name}@m.gretaoto.ca",
+      password: password,
+      agreement: true,
+      approved: true,
+      admin: false,
+      moderator: false,
+      confirmed_at: nil
     )
 
     account.note = twitter_user.description
     account.display_name = twitter_user.name
     account.fields = [
-        {
-            name: 'Twitter', value: "https://www.twitter.com/@#{account.username}"
-        },
-        {
-            name: 'Status', value: 'Cross-Site-Subscribed account: unclaimed'
-        },
+      {
+        name: 'Twitter', value: "https://www.twitter.com/@#{account.username}"
+      },
+      {
+        name: 'Status', value: 'Cross-Site-Subscribed account: unclaimed'
+      },
     ]
     account.header_remote_url = twitter_user.profile_banner_uri_https if twitter_user.profile_banner_uri?
     account.avatar_remote_url = twitter_user.profile_image_uri_https if twitter_user.profile_image_uri?
@@ -131,5 +131,4 @@ class CrossSiteTwitter
     Rails.logger.debug "Invalid URL in attachment: #{e}"
     media_attachments
   end
-
 end
