@@ -6,6 +6,7 @@ class CrossSiteSubscribesController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @current_twitter_account = TwitterAuthentication.find_by(account_id: current_account.id)
     @cross_site_subscriptions = subscription_list
     render :index
   end
@@ -24,7 +25,7 @@ class CrossSiteSubscribesController < ApplicationController
     render :'errors/400' if resource_params[:site] != 'twitter'
 
     if @cross_site_subscription.save
-      CrossSiteTwitter.new.follow(@cross_site_subscription.foreign_user_id)
+      SubscribeCrossSiteUserService.new.call(@cross_site_subscription, current_account)
       redirect_to cross_site_subscribes_path
     else
       @cross_site_subscriptions = subscription_list

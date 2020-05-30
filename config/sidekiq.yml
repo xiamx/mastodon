@@ -39,3 +39,6 @@
   update_tweets_scheduler:
     cron: '*/5 * * * *'
     class: Scheduler::UpdateTweets
+  sync_cross_site_follows_scheduler:
+    cron: '*/30 * * * *'
+    class: Scheduler::SyncCrossSiteFollows

@@ -2,11 +2,12 @@
 
 class CrossSiteTwitter
   def initialize
+    twitter_auth = TwitterAuthentication.find_by(system_default: true)
     @client = Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
       config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
-      config.access_token        = ENV['TWITTER_ACCESS_TOKEN']
-      config.access_token_secret = ENV['TWITTER_ACCESS_SECRET']
+      config.access_token        = twitter_auth.access_token
+      config.access_token_secret = twitter_auth.access_token_secret
     end
   end
 
@@ -26,6 +27,55 @@ class CrossSiteTwitter
     home_timeline(since_id: Tweet.order('created_at desc').limit(1).first&.tweet_id).reverse_each do |tweet|
       process_tweet!(tweet)
     end
+  end
+
+  def sync_follows!
+    owner = TwitterAuthentication.find_by(system_default: true).account.user
+    @client.following.each do |twitter_user|
+      CrossSiteSubscription.where(site: 'twitter', foreign_user_id: twitter_user.screen_name).first_or_create!(
+        site: 'twitter', foreign_user_id: twitter_user.screen_name, user: owner
+      )
+    end
+  end
+
+  def create_account_if_not_exist(twitter_user)
+    twitter_user = @client.user(twitter_user) if twitter_user.is_a? String
+
+    account = Account.find_by(username: twitter_user.screen_name)
+    return account if account.present?
+
+    account = Account.new(username: twitter_user.screen_name)
+    password = SecureRandom.hex
+    user     = User.new(
+        email: '',
+        password: password,
+        agreement: true,
+        approved: true,
+        admin: false,
+        moderator: false,
+        confirmed_at: nil
+    )
+
+    account.note = twitter_user.description
+    account.display_name = twitter_user.name
+    account.fields = [
+        {
+            name: 'Twitter', value: "https://www.twitter.com/@#{account.username}"
+        },
+        {
+            name: 'Status', value: 'Cross-Site-Subscribed account: unclaimed'
+        },
+    ]
+    account.header_remote_url = twitter_user.profile_banner_uri_https if twitter_user.profile_banner_uri?
+    account.avatar_remote_url = twitter_user.profile_image_uri_https if twitter_user.profile_image_uri?
+
+    account.suspended_at = nil
+    user.account         = account
+    user.save!
+    user.confirmed_at = nil
+    user.confirm!
+
+    account
   end
 
   private
@@ -82,41 +132,4 @@ class CrossSiteTwitter
     media_attachments
   end
 
-  def create_account_if_not_exist(twitter_user)
-    account = Account.find_by(username: twitter_user.screen_name)
-    return account if account.present?
-
-    account = Account.new(username: twitter_user.screen_name)
-    password = SecureRandom.hex
-    user     = User.new(
-      email: '',
-      password: password,
-      agreement: true,
-      approved: true,
-      admin: false,
-      moderator: false,
-      confirmed_at: nil
-    )
-
-    account.note = twitter_user.description
-    account.display_name = twitter_user.name
-    account.fields = [
-      {
-        name: 'Twitter', value: "https://www.twitter.com/@#{account.username}"
-      },
-      {
-        name: 'Status', value: 'Cross-Site-Subscribed account: unclaimed'
-      },
-    ]
-    account.header_remote_url = twitter_user.profile_banner_uri_https if twitter_user.profile_banner_uri?
-    account.avatar_remote_url = twitter_user.profile_image_uri_https if twitter_user.profile_image_uri?
-
-    account.suspended_at = nil
-    user.account         = account
-    user.save!
-    user.confirmed_at = nil
-    user.confirm!
-
-    account
-  end
 end
