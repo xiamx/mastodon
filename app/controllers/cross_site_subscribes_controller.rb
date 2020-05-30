@@ -6,7 +6,7 @@ class CrossSiteSubscribesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @current_twitter_account = TwitterAuthentication.find_by(account_id: current_account.id)
+    @current_twitter_account = TwitterAuthentication.find_by(system_default: true)
     @cross_site_subscriptions = subscription_list
     render :index
   end
