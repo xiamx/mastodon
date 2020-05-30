@@ -8,7 +8,7 @@ class TwitterAuthenticationsController < ApplicationController
     authorize :twitter_authentication, :create?
     @consumer = consummer
     @request_token = @consumer.get_request_token(
-      oauth_callback: callback_twitter_authentications_url
+      oauth_callback: callback_twitter_authentications_url(protocol: 'https')
     )
     redirect_to @request_token.authorize_url
   end
