@@ -5,9 +5,9 @@
   = render 'shared/error_messages', object: @cross_site_subscription
 
   .fields-group
-    = f.input :site, wrapper: :with_label, prompt: I18n.t('cross_site_subscribes.site_name'), input_html: {readonly: :true}
+    = f.input :site, wrapper: :with_label, label: I18n.t('cross_site_subscribes.site'), input_html: {readonly: :true}
 
-    = f.input :foreign_user_id, wrapper: :with_label, prompt: I18n.t('cross_site_subscribes.user_handle')
+    = f.input :foreign_user_id, wrapper: :with_label, label: I18n.t('cross_site_subscribes.foreign_user_id')
 
   .actions
     = f.button :button, t('cross_site_subscribes.subscribe'), type: :submit
