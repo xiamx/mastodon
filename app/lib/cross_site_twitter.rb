@@ -32,9 +32,11 @@ class CrossSiteTwitter
   def sync_follows!
     owner = TwitterAuthentication.find_by(system_default: true).account.user
     @client.following.each do |twitter_user|
-      CrossSiteSubscription.where(site: 'twitter', foreign_user_id: twitter_user.screen_name).first_or_create!(
-        site: 'twitter', foreign_user_id: twitter_user.screen_name, user: owner
-      )
+      CrossSiteSubscription.transaction(requires_new: true) do
+        CrossSiteSubscription.where(site: 'twitter', foreign_user_id: twitter_user.screen_name).first_or_create!(
+            site: 'twitter', foreign_user_id: twitter_user.screen_name, user: owner
+        )
+      end
     end
   end
 
