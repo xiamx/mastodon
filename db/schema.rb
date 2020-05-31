@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_30_174219) do
+ActiveRecord::Schema.define(version: 2020_05_31_032539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 2020_05_30_174219) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["site", "foreign_user_id"], name: "index_cross_site_subscriptions_on_site_and_foreign_user_id", unique: true
     t.index ["user_id"], name: "index_cross_site_subscriptions_on_user_id"
   end
 

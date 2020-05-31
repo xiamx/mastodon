@@ -24,13 +24,17 @@ class CrossSiteSubscribesController < ApplicationController
 
     render :'errors/400' if resource_params[:site] != 'twitter'
 
-    if @cross_site_subscription.save
-      SubscribeCrossSiteUserService.new.call(@cross_site_subscription, current_account)
-      redirect_to cross_site_subscribes_path
-    else
-      @cross_site_subscriptions = subscription_list
-      render :index
+    CrossSiteSubscription.transaction(requires_new: true) do
+      if @cross_site_subscription.save
+        SubscribeCrossSiteUserService.new.call(@cross_site_subscription, current_account)
+        return redirect_to cross_site_subscribes_path
+      else
+        @cross_site_subscriptions = subscription_list
+        raise ActiveRecord::Rollback
+      end
     end
+    render :index
+
   end
 
   def destroy
