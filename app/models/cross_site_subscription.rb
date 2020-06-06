@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: cross_site_subscriptions
@@ -13,7 +14,7 @@
 class CrossSiteSubscription < ApplicationRecord
   belongs_to :user
   before_validation :downcase_fields!
-  validates :foreign_user_id, uniqueness: { scope: :site, message: 'user already added for this site', case_sensitive: false}
+  validates :foreign_user_id, uniqueness: { scope: :site, message: 'user already added for this site', case_sensitive: false }
   validate :valid_foreign_user
 
   before_validation do
@@ -29,8 +30,8 @@ class CrossSiteSubscription < ApplicationRecord
   end
 
   def downcase_fields!
-    self.foreign_user_id.downcase!
-    self.site.downcase!
+    foreign_user_id.downcase!
+    site.downcase!
   end
 
   def site_user_url
@@ -50,6 +51,6 @@ class CrossSiteSubscription < ApplicationRecord
   end
 
   def account
-    @_account ||= Account.find_by(username: foreign_user_id)
+    @_account ||= Account.find_by('LOWER(username) = ?', foreign_user_id.downcase)
   end
 end
