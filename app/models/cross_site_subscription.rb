@@ -26,6 +26,7 @@ class CrossSiteSubscription < ApplicationRecord
   end
 
   def valid_foreign_user
+    errors.add(:site, "Only Twitter foreign user is supported") unless twitter?
     errors.add(:foreign_user_id, "Can't find that user") if twitter? && !CrossSiteTwitter.new.user_exists?(foreign_user_id)
   end
 
