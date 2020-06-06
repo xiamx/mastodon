@@ -15,6 +15,10 @@ class CrossSiteTwitter
     @client.follow(twitter_handle)
   end
 
+  def user_exists?(username)
+    @client.user?(username)
+  end
+
   def home_timeline(since_id: nil)
     if since_id.nil?
       @client.home_timeline(tweet_mode: 'extended', count: 200)
@@ -58,7 +62,7 @@ class CrossSiteTwitter
       confirmed_at: nil
     )
 
-    account.note = twitter_user.description
+    account.note = twitter_user.description.presence || "Cross-Site-Subscribed account: https://www.twitter.com/@#{account.username}"
     account.display_name = twitter_user.name
     account.fields = [
       {
@@ -73,10 +77,10 @@ class CrossSiteTwitter
 
     account.suspended_at = nil
     user.account         = account
-    user.save!
-    user.confirmed_at = nil
+    user.skip_confirmation!
     user.confirm!
     user.approve!
+    user.save!
 
     account
   end
