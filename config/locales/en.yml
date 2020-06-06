@@ -493,6 +493,7 @@ en:
       unresolved: Unresolved
       updated_at: Updated
     settings:
+      cross_site_subscribe: Cross Site Subscriptions
       activity_api_enabled:
         desc_html: Counts of locally posted statuses, active users, and new registrations in weekly buckets
         title: Publish aggregate statistics about user activity

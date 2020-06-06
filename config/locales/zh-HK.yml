@@ -401,6 +401,7 @@ zh-HK:
       unresolved: 未處理
       updated_at: 更新
     settings:
+      cross_site_subscribe: 跨站订阅 (Twitter)
       activity_api_enabled:
         desc_html: 本站用戶發佈的文章，以及本站的活躍用戶和一週內新用戶數
         title: 公開用戶活躍度的統計數據
