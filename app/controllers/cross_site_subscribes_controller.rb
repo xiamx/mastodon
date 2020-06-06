@@ -3,10 +3,9 @@ class CrossSiteSubscribesController < ApplicationController
 
   layout 'admin'
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :fetch_current_twitter_account
 
   def index
-    @current_twitter_account = TwitterAuthentication.find_by(system_default: true)
     @cross_site_subscriptions = subscription_list
     render :index
   end
@@ -33,7 +32,7 @@ class CrossSiteSubscribesController < ApplicationController
         raise ActiveRecord::Rollback
       end
     end
-    render :index
+    render :new
 
   end
 
@@ -42,6 +41,10 @@ class CrossSiteSubscribesController < ApplicationController
   end
 
   private
+
+  def fetch_current_twitter_account
+    @current_twitter_account = TwitterAuthentication.find_by(system_default: true)
+  end
 
   def subscription_list
     CrossSiteSubscription.all.page(params[:page]).per(20)
