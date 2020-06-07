@@ -53,7 +53,7 @@ class CrossSiteTwitter
     account = Account.new(username: twitter_user.screen_name)
     password = SecureRandom.hex
     user     = User.new(
-      email: "twitter_user_#{twitter_user.screen_name}@m.gretaoto.ca",
+      email: "twitter_#{SecureRandom.hex(10)}@m.gretaoto.ca",
       password: password,
       agreement: true,
       approved: true,
