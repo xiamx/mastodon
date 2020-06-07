@@ -47,6 +47,8 @@ class CrossSiteTwitter
   def create_account_if_not_exist(twitter_user)
     twitter_user = @client.user(twitter_user) if twitter_user.is_a? String
 
+    cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: twitter_user.screen_name.downcase)
+
     account = Account.find_by(username: twitter_user.screen_name)
     return account if account.present?
 
@@ -61,6 +63,8 @@ class CrossSiteTwitter
       moderator: false,
       confirmed_at: nil
     )
+    user.settings['default_sensitive'] = cross_site_subscription&.sensitive
+    user.settings['default_privacy'] = :unlisted if cross_site_subscription&.sensitive
 
     account.note = twitter_user.description.presence || "Cross-Site-Subscribed account: https://www.twitter.com/@#{account.username}"
     account.display_name = twitter_user.name
