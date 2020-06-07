@@ -2,15 +2,11 @@
 
 class CrossSiteSubscribePolicy < ApplicationPolicy
   def index?
-    staff?
+    user_signed_in?
   end
 
   def create?
-    min_required_role?
-  end
-
-  def deactivate_all?
-    admin?
+    user_signed_in?
   end
 
   def destroy?
@@ -23,7 +19,4 @@ class CrossSiteSubscribePolicy < ApplicationPolicy
     record.user_id == current_user&.id
   end
 
-  def min_required_role?
-    current_user&.role?(Setting.min_invite_role)
-  end
 end
