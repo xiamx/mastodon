@@ -63,7 +63,7 @@ class CrossSiteTwitter
       moderator: false,
       confirmed_at: nil
     )
-    user.settings['default_sensitive'] = cross_site_subscription&.sensitive
+    user.settings['default_sensitive'] = true if  cross_site_subscription&.sensitive
     user.settings['default_privacy'] = :unlisted if cross_site_subscription&.sensitive
 
     account.note = twitter_user.description.presence || "Cross-Site-Subscribed account: https://www.twitter.com/@#{account.username}"
