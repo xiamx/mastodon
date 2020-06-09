@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_07_042120) do
+ActiveRecord::Schema.define(version: 2020_06_09_003148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.boolean "unread", default: false, null: false
     t.index ["account_id", "conversation_id", "participant_account_ids"], name: "index_unique_conversations", unique: true
     t.index ["account_id"], name: "index_account_conversations_on_account_id"
-    t.index ["conversation_id"], name: "index_account_conversations_on_conversation_id"
   end
 
   create_table "account_domain_blocks", force: :cascade do |t|
@@ -178,7 +177,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.index "lower((username)::text), lower((domain)::text)", name: "index_accounts_on_username_and_domain_lower", unique: true
     t.index ["moved_to_account_id"], name: "index_accounts_on_moved_to_account_id"
     t.index ["uri"], name: "index_accounts_on_uri"
-    t.index ["url"], name: "index_accounts_on_url"
   end
 
   create_table "accounts_tags", id: false, force: :cascade do |t|
@@ -207,7 +205,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.datetime "updated_at", null: false
     t.index ["account_id", "announcement_id"], name: "index_announcement_mutes_on_account_id_and_announcement_id", unique: true
     t.index ["account_id"], name: "index_announcement_mutes_on_account_id"
-    t.index ["announcement_id"], name: "index_announcement_mutes_on_announcement_id"
   end
 
   create_table "announcement_reactions", force: :cascade do |t|
@@ -220,7 +217,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.index ["account_id", "announcement_id", "name"], name: "index_announcement_reactions_on_account_id_and_announcement_id", unique: true
     t.index ["account_id"], name: "index_announcement_reactions_on_account_id"
     t.index ["announcement_id"], name: "index_announcement_reactions_on_announcement_id"
-    t.index ["custom_emoji_id"], name: "index_announcement_reactions_on_custom_emoji_id"
   end
 
   create_table "announcements", force: :cascade do |t|
@@ -289,7 +285,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.datetime "updated_at", null: false
     t.boolean "sensitive"
     t.index ["site", "foreign_user_id"], name: "index_cross_site_subscriptions_on_site_and_foreign_user_id", unique: true
-    t.index ["user_id"], name: "index_cross_site_subscriptions_on_user_id"
   end
 
   create_table "custom_emoji_categories", force: :cascade do |t|
@@ -361,7 +356,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
     t.bigint "status_id", null: false
-    t.index ["account_id", "id"], name: "index_favourites_on_account_id_and_id"
     t.index ["account_id", "status_id"], name: "index_favourites_on_account_id_and_status_id", unique: true
     t.index ["status_id"], name: "index_favourites_on_status_id"
   end
@@ -440,7 +434,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.bigint "follow_id"
     t.index ["account_id", "list_id"], name: "index_list_accounts_on_account_id_and_list_id", unique: true
     t.index ["follow_id"], name: "index_list_accounts_on_follow_id"
-    t.index ["list_id", "account_id"], name: "index_list_accounts_on_list_id_and_account_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -481,7 +474,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.integer "processing"
     t.integer "file_storage_schema_version"
     t.index ["account_id"], name: "index_media_attachments_on_account_id"
-    t.index ["scheduled_status_id"], name: "index_media_attachments_on_scheduled_status_id"
     t.index ["shortcode"], name: "index_media_attachments_on_shortcode", unique: true
     t.index ["status_id"], name: "index_media_attachments_on_status_id"
   end
@@ -668,7 +660,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.datetime "scheduled_at"
     t.jsonb "params"
     t.index ["account_id"], name: "index_scheduled_statuses_on_account_id"
-    t.index ["scheduled_at"], name: "index_scheduled_statuses_on_scheduled_at"
   end
 
   create_table "session_activations", force: :cascade do |t|
@@ -859,7 +850,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_042120) do
     t.boolean "approved", default: true, null: false
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["created_by_application_id"], name: "index_users_on_created_by_application_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
