@@ -16,7 +16,7 @@ class CrossSiteInstagram
     creator = CrossSiteAccountCreator.new(
       'instagram',
       instagram_user_id,
-      avatar_uri: basic_info[:avatar_uri]
+      basic_info
     )
     account = creator.create_if_not_exist
 
@@ -26,14 +26,17 @@ class CrossSiteInstagram
   end
 
   def fetch_profile_basics(instagram_user_id)
-    uri = URI("https://www.instagram.com/#{instagram_user_id}/")
+    uri = URI("https://www.instagram.com/web/search/topsearch/?query=#{instagram_user_id}")
     Net::HTTP.start(uri.host, uri.port,
                     :use_ssl => uri.scheme == 'https') do |http|
       request = Net::HTTP::Get.new uri, "User-Agent": "Mozilla/5.0 (X11; Linux i686; rv:77.0) Gecko/20100101 Firefox/77.0"
       response = http.request request # Net::HTTPResponse object
-      document = Nokogiri::HTML.parse(response.body)
+      document = JSON.parse(response.body)
+      matching_user = document["users"][0]["user"]
+      puts document["users"][0]
       {
-          avatar_uri:  document.css('meta[property="og:image"]')[0][:content]
+          avatar_uri:  matching_user["profile_pic_url"],
+          display_name: matching_user["full_name"]
       }
     end
   end
