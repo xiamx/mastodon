@@ -105,10 +105,10 @@ class CrossSiteTwitter
   end
 
   def publish_tweet!(tweet_db_obj)
-    account = tweet_db_obj.account
     return if tweet_db_obj.published?
 
-    payload = ActiveSupport::JSON.decode(tweet_db_obj.payload)
+    account = tweet_db_obj.account
+
     media_attachments = process_attachments(tweet_db_obj)
     PostStatusService.new.call(account, text: tweet_db_obj.full_text, media_ids: media_attachments.map(&:id))
     tweet_db_obj.publish!
