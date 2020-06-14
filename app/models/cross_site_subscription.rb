@@ -13,6 +13,8 @@
 #  sensitive       :boolean
 #
 class CrossSiteSubscription < ApplicationRecord
+  WHITELISTED_SITES = %w[twitter instagram]
+
   belongs_to :user
   before_validation :downcase_fields!
   validates :foreign_user_id, uniqueness: { scope: :site, message: 'user already added for this site', case_sensitive: false }
@@ -27,8 +29,8 @@ class CrossSiteSubscription < ApplicationRecord
   end
 
   def valid_foreign_user
-    errors.add(:site, "Only Twitter foreign user is supported") unless twitter?
-    errors.add(:foreign_user_id, "Can't find that user") if twitter? && !CrossSiteTwitter.new.user_exists?(foreign_user_id)
+    errors.add(:site, "Only Twitter and Instagram foreign user is supported") unless WHITELISTED_SITES.include?(site)
+    errors.add(:foreign_user_id, "Can't find that twitter user") if twitter? && !CrossSiteTwitter.new.user_exists?(foreign_user_id)
   end
 
   def downcase_fields!

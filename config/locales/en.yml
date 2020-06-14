@@ -1318,6 +1318,7 @@ en:
     manage_cross_site_subscribes: Manage Cross Site Subscribes
     connect_follower_twitter_user: Connect Twitter User
     add_twitter_user: Add Twitter User
+    add_instagram_user: Add Instagram User
     site: Site
     foreign_user_id: Foreign User ID
     sensitive: Contains sensitive content

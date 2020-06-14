@@ -11,8 +11,8 @@ class CrossSiteSubscribesController < ApplicationController
   end
 
   def new
-    render :'errors/400' if params[:site] != 'twitter'
-    @cross_site_subscription = CrossSiteSubscription.new(site: 'twitter')
+    render :'errors/400' unless CrossSiteSubscription::WHITELISTED_SITES.include?(params[:site])
+    @cross_site_subscription = CrossSiteSubscription.new(site: params[:site])
   end
 
   def create
@@ -21,12 +21,16 @@ class CrossSiteSubscribesController < ApplicationController
     @cross_site_subscription      = CrossSiteSubscription.new(resource_params)
     @cross_site_subscription.user = current_user
 
-    render :'errors/400' if resource_params[:site] != 'twitter'
+    return render :'errors/400' unless CrossSiteSubscription::WHITELISTED_SITES.include?(@cross_site_subscription.site)
+
+    return render :'errors/400' if @cross_site_subscription.site == 'instagram' && !Flipper.enabled?(:cross_site_instagram, current_user)
 
     CrossSiteSubscription.transaction(requires_new: true) do
       if @cross_site_subscription.save
-        SubscribeCrossSiteUserService.new.call(@cross_site_subscription, current_account)
-        return redirect_to cross_site_subscribes_path
+        if @cross_site_subscription.site == 'twitter'
+          SubscribeCrossSiteUserService.new.call(@cross_site_subscription, current_account)
+        end
+        return redirect_to action: :index
       else
         @cross_site_subscriptions = subscription_list
         raise ActiveRecord::Rollback
