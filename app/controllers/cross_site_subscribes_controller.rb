@@ -30,6 +30,9 @@ class CrossSiteSubscribesController < ApplicationController
         if @cross_site_subscription.site == 'twitter'
           SubscribeCrossSiteUserService.new.call(@cross_site_subscription, current_account)
         end
+        if @cross_site_subscription.site == 'instagram'
+          UpdateInstagramPostsWorker.perform_async(@cross_site_subscription.foreign_user_id)
+        end
         return redirect_to action: :index
       else
         @cross_site_subscriptions = subscription_list
