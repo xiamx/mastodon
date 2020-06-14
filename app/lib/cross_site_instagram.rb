@@ -12,17 +12,20 @@ class CrossSiteInstagram
   end
 
   def update!(instagram_user_id)
-    basic_info = fetch_profile_basics(instagram_user_id)
-    creator = CrossSiteAccountCreator.new(
-      'instagram',
-      instagram_user_id,
-      basic_info
-    )
-    account = creator.create_if_not_exist
-
+    account = create_account_if_not_exist(instagram_user_id)
     feed_items(instagram_user_id).reverse_each do |post|
       process_instagram_post post, account
     end
+  end
+
+  def create_account_if_not_exist(instagram_user_id)
+    basic_info = fetch_profile_basics(instagram_user_id)
+    creator = CrossSiteAccountCreator.new(
+        'instagram',
+        instagram_user_id,
+        basic_info
+    )
+    creator.create_if_not_exist
   end
 
   def fetch_profile_basics(instagram_user_id)
