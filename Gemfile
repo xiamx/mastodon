@@ -108,6 +108,9 @@ gem 'twitter' , '~> 7.0'
 gem 'oauth', '~> 0.5'
 
 gem "sentry-raven"
+gem 'puma_worker_killer'
+gem 'flipper'
+gem 'flipper-redis'
 
 group :development, :test do
   gem 'fabrication', '~> 2.21'
