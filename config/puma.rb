@@ -20,4 +20,10 @@ on_worker_boot do
   end
 end
 
+before_fork do
+  require 'puma_worker_killer'
+
+  PumaWorkerKiller.start
+end
+
 plugin :tmp_restart
