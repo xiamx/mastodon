@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_13_191029) do
+ActiveRecord::Schema.define(version: 2020_06_14_035808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -857,6 +857,7 @@ ActiveRecord::Schema.define(version: 2020_06_13_191029) do
     t.datetime "published_at"
     t.index ["account_id"], name: "index_tweets_on_account_id"
     t.index ["created_at"], name: "index_tweets_on_created_at"
+    t.index ["tweet_id"], name: "index_tweets_on_tweet_id", unique: true
   end
 
   create_table "twitter_authentications", force: :cascade do |t|
