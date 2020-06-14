@@ -20,7 +20,7 @@ const NavigationPanel = () => (
     <NavLink className='column-link column-link--transparent' to='/bookmarks'><Icon className='column-link__icon' id='bookmark' fixedWidth /><FormattedMessage id='navigation_bar.bookmarks' defaultMessage='Bookmarks' /></NavLink>
     <NavLink className='column-link column-link--transparent' to='/lists'><Icon className='column-link__icon' id='list-ul' fixedWidth /><FormattedMessage id='navigation_bar.lists' defaultMessage='Lists' /></NavLink>
     {profile_directory && <NavLink className='column-link column-link--transparent' to='/directory'><Icon className='column-link__icon' id='address-book-o' fixedWidth /><FormattedMessage id='getting_started.directory' defaultMessage='Profile directory' /></NavLink>}
-    <a className='column-link column-link--transparent' href='/cross_site_subscribes'><Icon className='column-link__icon' id='globe' fixedWidth /><FormattedMessage id='navigation_bar.cross_site_subscribes' defaultMessage='Twitter subscriptions' /></a>
+    <a className='column-link column-link--transparent' href='/cross_site_subscribes'><Icon className='column-link__icon' id='globe' fixedWidth /><FormattedMessage id='navigation_bar.cross_site_subscribes' defaultMessage='Twitter/Instagram subscriptions' /></a>
 
     <ListPanel />
 
