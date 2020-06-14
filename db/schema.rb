@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_09_004017) do
+ActiveRecord::Schema.define(version: 2020_06_13_191029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -408,6 +408,18 @@ ActiveRecord::Schema.define(version: 2020_06_09_004017) do
     t.boolean "overwrite", default: false, null: false
   end
 
+  create_table "instagram_posts", force: :cascade do |t|
+    t.string "post_id", null: false
+    t.bigint "account_id"
+    t.string "post_url"
+    t.string "full_text"
+    t.jsonb "payload"
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_instagram_posts_on_account_id"
+  end
+
   create_table "invites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "code", default: "", null: false
@@ -779,6 +791,7 @@ ActiveRecord::Schema.define(version: 2020_06_09_004017) do
     t.datetime "updated_at", null: false
     t.datetime "published_at"
     t.index ["account_id"], name: "index_tweets_on_account_id"
+    t.index ["created_at"], name: "index_tweets_on_created_at"
   end
 
   create_table "twitter_authentications", force: :cascade do |t|
@@ -910,6 +923,7 @@ ActiveRecord::Schema.define(version: 2020_06_09_004017) do
   add_foreign_key "follows", "accounts", name: "fk_32ed1b5560", on_delete: :cascade
   add_foreign_key "identities", "users", name: "fk_bea040f377", on_delete: :cascade
   add_foreign_key "imports", "accounts", name: "fk_6db1b6e408", on_delete: :cascade
+  add_foreign_key "instagram_posts", "accounts", on_delete: :cascade
   add_foreign_key "invites", "users", on_delete: :cascade
   add_foreign_key "list_accounts", "accounts", on_delete: :cascade
   add_foreign_key "list_accounts", "follows", on_delete: :cascade
