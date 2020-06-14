@@ -54,7 +54,29 @@ class CrossSiteSubscription < ApplicationRecord
     end
   end
 
+  def normalized_account_username
+    case site
+    when 'twitter'
+      foreign_user_id.downcase
+    when 'instagram'
+      foreign_user_id.downcase.gsub('.', '_') + "_" + shorten_site
+    else
+      foreign_user_id
+    end
+  end
+
+  def shorten_site
+    case site
+    when 'twitter'
+      't'
+    when 'instagram'
+      'ig'
+    else
+      site
+    end
+  end
+
   def account
-    @_account ||= Account.find_by('LOWER(username) = ?', foreign_user_id.downcase)
+    @_account ||= Account.find_by('LOWER(username) = ?', normalized_account_username)
   end
 end
