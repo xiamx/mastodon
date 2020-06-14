@@ -26,11 +26,16 @@ class CrossSiteInstagram
   end
 
   def fetch_profile_basics(instagram_user_id)
-    response = Net::HTTP.get(URI.parse("https://www.instagram.com/#{instagram_user_id}/"))
-    document = Nokogiri::HTML.parse(response)
-    {
-        avatar_uri:  document.css('meta[property="og:image"]')[0][:content]
-    }
+    uri = URI("https://www.instagram.com/#{instagram_user_id}/")
+    Net::HTTP.start(uri.host, uri.port,
+                    :use_ssl => uri.scheme == 'https') do |http|
+      request = Net::HTTP::Get.new uri, "User-Agent": "Mozilla/5.0 (X11; Linux i686; rv:77.0) Gecko/20100101 Firefox/77.0"
+      response = http.request request # Net::HTTPResponse object
+      document = Nokogiri::HTML.parse(response.body)
+      {
+          avatar_uri:  document.css('meta[property="og:image"]')[0][:content]
+      }
+    end
   end
 
   private
