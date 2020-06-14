@@ -22,6 +22,9 @@ end
 
 before_fork do
   require 'puma_worker_killer'
+  PumaWorkerKiller.config do |config|
+    config.ram           = 1024 # mb
+  end
 
   PumaWorkerKiller.start
 end
