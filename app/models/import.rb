@@ -17,7 +17,7 @@
 #
 
 class Import < ApplicationRecord
-  FILE_TYPES = %w(*/*).freeze
+  FILE_TYPES = %w(application/csv text/plain text/csv).freeze
   MODES = %i(merge overwrite).freeze
 
   self.inheritance_column = false
