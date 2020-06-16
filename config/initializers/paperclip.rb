@@ -3,6 +3,10 @@
 Paperclip::DataUriAdapter.register
 Paperclip::ResponseWithLimitAdapter.register
 
+Paperclip.options[:content_type_mappings] = {
+    csv: %w(text/csv application/csv)
+}
+
 Paperclip.interpolates :filename do |attachment, style|
   if style == :original
     attachment.original_filename
