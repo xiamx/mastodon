@@ -138,7 +138,7 @@ module Mastodon
     Raven.configure do |config|
       config.dsn = 'https://a863330c88da4a64b0af64519762b97f:5e4952621ee14cd18ac8ebaadc29ce4d@o407124.ingest.sentry.io/5275722'
       config.async = lambda { |event|
-        SentryWorker.perform_later(event)
+        SentryWorker.perform_async(event)
       }
     end
 
