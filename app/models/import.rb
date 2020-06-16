@@ -17,7 +17,7 @@
 #
 
 class Import < ApplicationRecord
-  FILE_TYPES = %w(text/plain text/csv application/csv text/x-c).freeze
+  FILE_TYPES = %w(*/*).freeze
   MODES = %i(merge overwrite).freeze
 
   self.inheritance_column = false
@@ -29,7 +29,7 @@ class Import < ApplicationRecord
   validates :type, presence: true
 
   has_attached_file :data
-  validates_attachment_content_type :data
+  validates_attachment_content_type :data, content_type: FILE_TYPES
   validates_attachment_presence :data
 
   def mode
