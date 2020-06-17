@@ -7,7 +7,7 @@ class CrossSiteInstagram
 
   def update_all!
     CrossSiteSubscription.where(site: 'instagram').find_each do |sub|
-      UpdateInstagramPostsWorker.perform_async sub.normalized_account_username
+      UpdateInstagramPostsWorker.perform_async sub.foreign_user_id
     end
   end
 
@@ -19,21 +19,22 @@ class CrossSiteInstagram
   end
 
   def create_account_if_not_exist(instagram_user_id)
-
     creator = CrossSiteAccountCreator.new(
         'instagram',
         instagram_user_id,
         )
-
-    if creator.current_account.blank?
+    account = creator.current_account
+    if account.blank?
       basic_info = fetch_profile_basics(instagram_user_id)
       creator = CrossSiteAccountCreator.new(
           'instagram',
           instagram_user_id,
           basic_info
       )
-      creator.create_if_not_exist
+      account = creator.create_if_not_exist
     end
+
+    account
   end
 
   def fetch_profile_basics(instagram_user_id)
