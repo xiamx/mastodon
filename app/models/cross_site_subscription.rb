@@ -61,7 +61,7 @@ class CrossSiteSubscription < ApplicationRecord
     when 'instagram'
       foreign_user_id.downcase.gsub('.', '_') + "_" + shorten_site
     else
-      foreign_user_id
+      foreign_user_id.downcase
     end
   end
 
