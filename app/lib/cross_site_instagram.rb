@@ -19,13 +19,21 @@ class CrossSiteInstagram
   end
 
   def create_account_if_not_exist(instagram_user_id)
-    basic_info = fetch_profile_basics(instagram_user_id)
+
     creator = CrossSiteAccountCreator.new(
         'instagram',
         instagram_user_id,
-        basic_info
-    )
-    creator.create_if_not_exist
+        )
+
+    if creator.current_account.blank?
+      basic_info = fetch_profile_basics(instagram_user_id)
+      creator = CrossSiteAccountCreator.new(
+          'instagram',
+          instagram_user_id,
+          basic_info
+      )
+      creator.create_if_not_exist
+    end
   end
 
   def fetch_profile_basics(instagram_user_id)
