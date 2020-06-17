@@ -12,7 +12,7 @@ class SubscribeCrossSiteUserService < BaseService
       cross_site_instagram = CrossSiteInstagram.new
       target_account = cross_site_instagram.create_account_if_not_exist(cross_site_subscription.foreign_user_id)
       FollowService.new.call(source_account, target_account)
-      UpdateInstagramPostsWorker.perform_async(cross_site_subscription.normalized_account_username)
+      UpdateInstagramPostsWorker.perform_async(cross_site_subscription.foreign_user_id)
     end
   end
 end
