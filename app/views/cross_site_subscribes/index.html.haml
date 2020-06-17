@@ -27,7 +27,7 @@
             %td= subscription.pretty_acct
           - else
             %td= link_to subscription.pretty_acct, account_url(subscription.account)
-          %td= link_to "@#{subscription.user.account.pretty_acct}", account_path(subscription.user.account)
+          %td= link_to "@#{subscription&.user&.account&.pretty_acct}", account_path(subscription&.user&.account)
           %td
 
 = paginate @cross_site_subscriptions
