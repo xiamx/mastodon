@@ -7,7 +7,7 @@ class CrossSiteInstagram
 
   def update_all!
     CrossSiteSubscription.where(site: 'instagram').find_each do |sub|
-      UpdateInstagramPostsWorker.perform_async sub.foreign_user_id
+      UpdateInstagramPostsWorker.perform_async sub.normalized_account_username
     end
   end
 
