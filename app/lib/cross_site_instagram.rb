@@ -2,7 +2,7 @@
 
 class CrossSiteInstagram
   def initialize
-    @rss_bridge_host = ENV["RSS_BRIDGE_URL"]
+    @rss_bridge_host = ENV['RSS_BRIDGE_URL']
   end
 
   def update_all!
@@ -20,16 +20,16 @@ class CrossSiteInstagram
 
   def create_account_if_not_exist(instagram_user_id)
     creator = CrossSiteAccountCreator.new(
-        'instagram',
-        instagram_user_id,
-        )
+      'instagram',
+      instagram_user_id
+    )
     account = creator.current_account
     if account.blank?
       basic_info = fetch_profile_basics(instagram_user_id)
       creator = CrossSiteAccountCreator.new(
-          'instagram',
-          instagram_user_id,
-          basic_info
+        'instagram',
+        instagram_user_id,
+        basic_info
       )
       account = creator.create_if_not_exist
     end
@@ -40,15 +40,15 @@ class CrossSiteInstagram
   def fetch_profile_basics(instagram_user_id)
     uri = URI("https://www.instagram.com/web/search/topsearch/?query=#{instagram_user_id}")
     Net::HTTP.start(uri.host, uri.port,
-                    :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri, "User-Agent": "Mozilla/5.0 (X11; Linux i686; rv:77.0) Gecko/20100101 Firefox/77.0"
+                    use_ssl: uri.scheme == 'https') do |http|
+      request = Net::HTTP::Get.new uri, "User-Agent": 'Mozilla/5.0 (X11; Linux i686; rv:77.0) Gecko/20100101 Firefox/77.0'
       response = http.request request # Net::HTTPResponse object
       begin
         document = ActiveSupport::JSON.decode(response.body)
-        matching_user = document["users"][0]["user"]
+        matching_user = document['users'][0]['user']
         {
-            avatar_uri:  matching_user["profile_pic_url"],
-            display_name: matching_user["full_name"]
+          avatar_uri: matching_user['profile_pic_url'],
+          display_name: matching_user['full_name'],
         }
       rescue ActiveSupport::JSON.parse_error
         {}
@@ -85,7 +85,7 @@ class CrossSiteInstagram
     image_array = media_array.select { |media| media['mime_type'] == 'image/jpeg' }
 
     media_array = if !video_array.empty?
-                    video_array
+                    [video_array.first]
                   else
                     image_array
                   end
@@ -112,11 +112,11 @@ class CrossSiteInstagram
   end
 
   def persist_or_find_post!(post, account)
-    if post['title'].present?
-      full_text = "#{post['title']} #{post['url']}"
-    else
-      full_text = post['url']
-    end
+    full_text = if post['title'].present?
+                  "#{post['title']} #{post['url']}"
+                else
+                  post['url']
+                end
     post_db_obj = InstagramPost.find_by(post_id: post['id'])
     return post_db_obj if post_db_obj.present?
 
