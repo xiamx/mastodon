@@ -26,14 +26,20 @@ class CrossSiteAccountCreator
     "#{screen_name}_#{shorten_site}"
   end
 
-  def create_if_not_exist
-    cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: screen_name)
-
+  def current_account
     account = Account.find_by(username: screen_name)
     return account if account.present?
 
     account = Account.find_by(username: formatted_screen_name)
     return account if account.present?
+
+    nil
+  end
+
+  def create_if_not_exist
+    return current_account if current_account.present?
+
+    cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: screen_name)
 
     account = Account.new(username: formatted_screen_name)
     password = SecureRandom.hex
