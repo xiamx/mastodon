@@ -99,10 +99,15 @@ class CrossSiteInstagram
   end
 
   def persist_or_find_post!(post, account)
+    if post['title'].present?
+      full_text = "#{post['title']} #{post['url']}"
+    else
+      full_text = post['url']
+    end
     post_db_obj = InstagramPost.find_by(post_id: post['id'])
     return post_db_obj if post_db_obj.present?
 
-    InstagramPost.create!(post_id: post['id'], full_text: post['title'] + ' ' + post['url'], account: account, payload: JSON.dump(post))
+    InstagramPost.create!(post_id: post['id'], full_text: full_text, account: account, payload: JSON.dump(post))
   end
 
   def feed_items(instagram_user_id)
