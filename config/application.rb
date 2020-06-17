@@ -140,6 +140,8 @@ module Mastodon
       config.async = lambda { |event|
         SentryWorker.perform_async(event)
       }
+      config.processors -= [Raven::Processor::PostData] # Do this to send POST data
+      config.processors -= [Raven::Processor::Cookies] # Do this to send cookies by default
     end
 
     Flipper.configure do |config|
