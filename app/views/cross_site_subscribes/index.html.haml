@@ -30,7 +30,7 @@
           - if subscription.user&.account&.present?
             %td= link_to "@#{subscription.user&.account&.pretty_acct}", account_path(subscription.user&.account)
           - else
-            %td
+            %td= "User deleted"
           %td
 
 = paginate @cross_site_subscriptions
