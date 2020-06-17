@@ -34,9 +34,8 @@ class CrossSiteInstagram
                     :use_ssl => uri.scheme == 'https') do |http|
       request = Net::HTTP::Get.new uri, "User-Agent": "Mozilla/5.0 (X11; Linux i686; rv:77.0) Gecko/20100101 Firefox/77.0"
       response = http.request request # Net::HTTPResponse object
-      document = JSON.parse(response.body)
+      document = ActiveSupport::JSON.decode(response.body)
       matching_user = document["users"][0]["user"]
-      puts document["users"][0]
       {
           avatar_uri:  matching_user["profile_pic_url"],
           display_name: matching_user["full_name"]
