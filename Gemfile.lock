@@ -108,6 +108,7 @@ GEM
     aws-sigv4 (1.1.3)
       aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.13)
+    bcrypt_pbkdf (1.0.1)
     better_errors (2.7.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -202,6 +203,7 @@ GEM
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
     e2mmap (0.1.0)
+    ed25519 (1.2.4)
     elasticsearch (7.6.0)
       elasticsearch-api (= 7.6.0)
       elasticsearch-transport (= 7.6.0)
@@ -703,6 +705,7 @@ DEPENDENCIES
   addressable (~> 2.7)
   annotate (~> 3.1)
   aws-sdk-s3 (~> 1.64)
+  bcrypt_pbkdf
   better_errors (~> 2.7)
   binding_of_caller (~> 0.7)
   blurhash (~> 0.1)
@@ -729,6 +732,7 @@ DEPENDENCIES
   doorkeeper (~> 5.4)
   dotenv-rails (~> 2.7)
   e2mmap (~> 0.1.0)
+  ed25519
   fabrication (~> 2.21)
   faker (~> 2.11)
   fast_blank (~> 1.0)

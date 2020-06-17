@@ -112,6 +112,9 @@ gem 'puma_worker_killer'
 gem 'flipper'
 gem 'flipper-redis'
 
+gem 'ed25519'
+gem 'bcrypt_pbkdf'
+
 group :development, :test do
   gem 'fabrication', '~> 2.21'
   gem 'fuubar', '~> 2.5'
