@@ -21,7 +21,7 @@ class CrossSiteSubscription < ApplicationRecord
   validate :valid_foreign_user
 
   before_validation do
-    self.foreign_user_id = foreign_user_id[1..-1] if twitter? && foreign_user_id.start_with?('@')
+    self.foreign_user_id = foreign_user_id[1..-1] if (site == 'twitter' || site == 'instagram') && foreign_user_id.start_with?('@')
   end
 
   def twitter?
