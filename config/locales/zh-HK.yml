@@ -410,7 +410,6 @@ zh-HK:
       contact_information:
         email: 輸入一個公開的電郵地址
         username: 輸入用戶名稱
-      cross_site_subscribe: 跨站订阅 (Twitter)
       domain_blocks:
         all: 給任何人
         disabled: 給沒有人
