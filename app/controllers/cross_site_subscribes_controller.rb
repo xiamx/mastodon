@@ -13,7 +13,7 @@ class CrossSiteSubscribesController < ApplicationController
   end
 
   def new
-    authorize :cross_site_subscription, new?
+    authorize :cross_site_subscription, :new?
 
     render :'errors/400' unless CrossSiteSubscription::WHITELISTED_SITES.include?(params[:site])
 
