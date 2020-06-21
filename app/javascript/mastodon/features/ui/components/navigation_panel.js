@@ -7,6 +7,7 @@ import NotificationsCounterIcon from './notifications_counter_icon';
 import FollowRequestsNavLink from './follow_requests_nav_link';
 import ListPanel from './list_panel';
 import TrendsContainer from 'mastodon/features/getting_started/containers/trends_container';
+import IconWithBadge from 'mastodon/components/icon_with_badge';
 
 const NavigationPanel = () => (
   <div className='navigation-panel'>
@@ -20,7 +21,7 @@ const NavigationPanel = () => (
     <NavLink className='column-link column-link--transparent' to='/bookmarks'><Icon className='column-link__icon' id='bookmark' fixedWidth /><FormattedMessage id='navigation_bar.bookmarks' defaultMessage='Bookmarks' /></NavLink>
     <NavLink className='column-link column-link--transparent' to='/lists'><Icon className='column-link__icon' id='list-ul' fixedWidth /><FormattedMessage id='navigation_bar.lists' defaultMessage='Lists' /></NavLink>
     {profile_directory && <NavLink className='column-link column-link--transparent' to='/directory'><Icon className='column-link__icon' id='address-book-o' fixedWidth /><FormattedMessage id='getting_started.directory' defaultMessage='Profile directory' /></NavLink>}
-    <a className='column-link column-link--transparent' href='/cross_site_subscribes'><Icon className='column-link__icon' id='globe' fixedWidth /><FormattedMessage id='navigation_bar.cross_site_subscribes' defaultMessage='Twitter/Instagram subscriptions' /></a>
+    <a className='column-link column-link--transparent' href='/cross_site_subscribes'><IconWithBadge count={'*'} className='column-link__icon' id='globe' fixedWidth /><FormattedMessage id='navigation_bar.cross_site_subscribes' defaultMessage='Twitter/Instagram subscriptions' /></a>
 
     <ListPanel />
 
