@@ -490,7 +490,6 @@ zh-CN:
       contact_information:
         email: 用于联系的公开电子邮件地址
         username: 用于联系的公开用户名
-      cross_site_subscribe: 跨站订阅 (Twitter)
       custom_css:
         desc_html: 通过 CSS 代码调整所有页面的显示效果
         title: 自定义 CSS

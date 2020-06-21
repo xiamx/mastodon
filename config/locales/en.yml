@@ -498,7 +498,6 @@ en:
       contact_information:
         email: Business e-mail
         username: Contact username
-      cross_site_subscribe: Cross Site Subscriptions
       custom_css:
         desc_html: Modify the look with CSS loaded on every page
         title: Custom CSS
