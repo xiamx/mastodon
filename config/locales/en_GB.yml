@@ -373,7 +373,6 @@ en_GB:
       unresolved: Unresolved
       updated_at: Updated
     settings:
-      cross_site_subscribe: Cross Site Subscriptions
       activity_api_enabled:
         desc_html: Counts of locally posted statuses, active users, and new registrations in weekly buckets
         title: Publish aggregate statistics about user activity
@@ -383,6 +382,7 @@ en_GB:
       contact_information:
         email: Business e-mail
         username: Contact username
+      cross_site_subscribe: Cross Site Subscriptions
       custom_css:
         desc_html: Modify the look with CSS loaded on every page
         title: Custom CSS
@@ -536,6 +536,16 @@ en_GB:
       return: Show the user's profile
       web: Go to web
     title: Follow %{acct}
+  cross_site_subscribes:
+    add_by: Added by
+    add_instagram_user: Add Instagram User
+    add_twitter_user: Add Twitter User
+    connect_follower_twitter_user: Connect Twitter User
+    create_cross_site_subscribes: New Cross Site Subscribe
+    foreign_user_id: Foreign User ID
+    manage_cross_site_subscribes: Manage Cross Site Subscribes
+    site: Site
+    subscribe: Subscribe
   datetime:
     distance_in_words:
       about_x_hours: "%{count}h"
@@ -1043,13 +1053,3 @@ en_GB:
   verification:
     explanation_html: 'You can <strong>verify yourself as the owner of the links in your profile metadata</strong>. For that, the linked website must contain a link back to your Mastodon profile. The link back <strong>must</strong> have a <code>rel="me"</code> attribute. The text content of the link does not matter. Here is an example:'
     verification: Verification
-  cross_site_subscribes:
-    create_cross_site_subscribes: New Cross Site Subscribe
-    manage_cross_site_subscribes: Manage Cross Site Subscribes
-    connect_follower_twitter_user: Connect Twitter User
-    add_twitter_user: Add Twitter User
-    add_instagram_user: Add Instagram User
-    site: Site
-    foreign_user_id: Foreign User ID
-    add_by: Added by
-    subscribe: Subscribe
