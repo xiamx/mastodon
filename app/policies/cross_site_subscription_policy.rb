@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
-class CrossSiteSubscribePolicy < ApplicationPolicy
+class CrossSiteSubscriptionPolicy < ApplicationPolicy
   def index?
+    user_signed_in?
+  end
+
+  def new?
     user_signed_in?
   end
 
@@ -11,6 +15,10 @@ class CrossSiteSubscribePolicy < ApplicationPolicy
 
   def destroy?
     owner? || (Setting.min_invite_role == 'admin' ? admin? : staff?)
+  end
+
+  def show_created_by?
+    staff?
   end
 
   private

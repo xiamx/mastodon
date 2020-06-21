@@ -5,18 +5,23 @@ class CrossSiteSubscribesController < ApplicationController
 
   before_action :authenticate_user!, :fetch_current_twitter_account
 
+  PER_PAGE = 20
+
   def index
-    @cross_site_subscriptions = subscription_list
+    @cross_site_subscriptions = CrossSiteSubscriptionFilter.new(current_user, filter_params).results.page(params[:page]).per(PER_PAGE)
     render :index
   end
 
   def new
+    authorize :cross_site_subscription, new?
+
     render :'errors/400' unless CrossSiteSubscription::WHITELISTED_SITES.include?(params[:site])
+
     @cross_site_subscription = CrossSiteSubscription.new(site: params[:site])
   end
 
   def create
-    authorize :cross_site_subscribe, :create?
+    authorize :cross_site_subscription, :create?
 
     @cross_site_subscription      = CrossSiteSubscription.new(resource_params)
     @cross_site_subscription.user = current_user
@@ -43,6 +48,10 @@ class CrossSiteSubscribesController < ApplicationController
   end
 
   private
+
+  def filter_params
+    params.slice(*CrossSiteSubscriptionFilter::KEYS).permit(*CrossSiteSubscriptionFilter::KEYS)
+  end
 
   def fetch_current_twitter_account
     @current_twitter_account = TwitterAuthentication.find_by(system_default: true)

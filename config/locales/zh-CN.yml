@@ -1306,3 +1306,9 @@ zh-CN:
     add_by: 添加人
     subscribe: 订阅
     sensitive: 包含敏感内容
+    all_sites: 全部站点
+    twitter: Twitter
+    instagram: Instagram
+    relationship: 关系
+    all_cross_site_users: 全部跨站用户
+    users_added_by_me: 我添加的跨站用户
