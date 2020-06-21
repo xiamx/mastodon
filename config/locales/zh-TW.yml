@@ -386,7 +386,6 @@ zh-TW:
       unresolved: 未解決
       updated_at: 更新
     settings:
-      cross_site_subscribe: 跨站订阅 (Twitter)
       activity_api_enabled:
         desc_html: 本站使用者發佈的嘟文數量，以及本站的活躍使用者與一週內新使用者數量
         title: 公開使用者活躍度的統計數據
@@ -396,6 +395,7 @@ zh-TW:
       contact_information:
         email: 用於聯絡的公開電子信箱位址
         username: 請輸入使用者名稱
+      cross_site_subscribe: 跨站订阅 (Twitter)
       domain_blocks:
         all: 給任何人
         disabled: 給沒有人
