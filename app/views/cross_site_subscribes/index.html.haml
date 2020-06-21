@@ -4,10 +4,26 @@
 - unless @current_twitter_account.present?
   %p= link_to t('cross_site_subscribes.connect_follower_twitter_user'), new_twitter_authentications_path, class: 'button'
 
+.filters
+  .filter-subset
+    %strong= t 'cross_site_subscribes.relationship'
+    %ul
+      %li= filter_link_to t('cross_site_subscribes.all_cross_site_users'), relationship: nil
+      %li= filter_link_to t('cross_site_subscribes.users_added_by_me'), relationship: :added_by_me
+
+  .filter-subset
+    %strong= t('cross_site_subscribes.site')
+    %ul
+      %li= filter_link_to t('cross_site_subscribes.all_sites'), location: :all
+      %li= filter_link_to t('cross_site_subscribes.twitter'), location: :twitter
+      %li= filter_link_to t('cross_site_subscribes.instagram'), location: :instagram
+
 %p
   = link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
   - if Flipper.enabled?(:cross_site_instagram, current_user)
     = link_to t('cross_site_subscribes.add_instagram_user'), new_cross_site_subscribe_path(site: :instagram), class: 'button'
+  - if Flipper.enabled?(:cross_site_bilibili, current_user)
+    = link_to t('cross_site_subscribes.add_bilibili_user'), new_cross_site_subscribe_path(site: :bilibili), class: 'button'
 
 .simple_form
   %table.table.table--invites
@@ -16,7 +32,8 @@
         %th
         %th= t('cross_site_subscribes.site')
         %th= t('cross_site_subscribes.foreign_user_id')
-        %th= t('cross_site_subscribes.add_by')
+        - if policy(:cross_site_subscription).show_created_by?
+          %th= t('cross_site_subscribes.add_by')
         %th
     %tbody
       - @cross_site_subscriptions.each do |subscription|
@@ -27,10 +44,11 @@
             %td= subscription.pretty_acct
           - else
             %td= link_to subscription.pretty_acct, account_url(subscription.account)
-          - if subscription.user&.account&.present?
-            %td= link_to "@#{subscription.user&.account&.pretty_acct}", account_path(subscription.user&.account)
-          - else
-            %td= "User deleted"
+          - if policy(:cross_site_subscription).show_created_by?
+            - if subscription.user&.account&.present?
+              %td= link_to "@#{subscription.user&.account&.pretty_acct}", account_path(subscription.user&.account)
+            - else
+              %td= "User deleted"
           %td
 
 = paginate @cross_site_subscriptions
