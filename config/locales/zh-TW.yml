@@ -395,7 +395,6 @@ zh-TW:
       contact_information:
         email: 用於聯絡的公開電子信箱位址
         username: 請輸入使用者名稱
-      cross_site_subscribe: 跨站订阅 (Twitter)
       domain_blocks:
         all: 給任何人
         disabled: 給沒有人
