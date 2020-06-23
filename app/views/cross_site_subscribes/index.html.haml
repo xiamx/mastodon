@@ -18,6 +18,8 @@
       %li= filter_link_to t('cross_site_subscribes.twitter'), location: :twitter
       %li= filter_link_to t('cross_site_subscribes.instagram'), location: :instagram
 
+.flash-message= I18n.t('cross_site_subscribes.explain_after_add')
+
 %p
   = link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
   - if Flipper.enabled?(:cross_site_instagram, current_user)
