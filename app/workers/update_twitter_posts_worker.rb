@@ -3,7 +3,8 @@
 class UpdateTwitterPostsWorker
   include Sidekiq::Worker
 
-  def perform(tweet)
+  def perform(tweet_attrs)
+    tweet = Twitter::Tweet.new(tweet_attrs)
     CrossSiteTwitter.new.process_tweet!(tweet)
   end
 end
