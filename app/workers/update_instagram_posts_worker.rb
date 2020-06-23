@@ -3,7 +3,7 @@
 class UpdateInstagramPostsWorker
   include Sidekiq::Worker
 
-  def perform(instagram_user_id)
-    CrossSiteInstagram.new.update! instagram_user_id
+  def perform(subscription)
+    CrossSiteInstagram.new.update! subscription
   end
 end
