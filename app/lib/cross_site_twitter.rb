@@ -29,7 +29,7 @@ class CrossSiteTwitter
 
   def update!
     home_timeline(since_id: Tweet.order('created_at desc').limit(1).first&.tweet_id).reverse_each do |tweet|
-      process_tweet!(tweet)
+      UpdateTwitterPostsWorker.perform_async(tweet)
     end
   end
 
@@ -54,8 +54,6 @@ class CrossSiteTwitter
                                 avatar_uri: twitter_user.profile_image_uri? ? twitter_user.profile_image_uri_https : nil).create_if_not_exist
   end
 
-  private
-
   def process_tweet!(tweet)
     cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: tweet.user.screen_name.downcase)
     if cross_site_subscription.present?
@@ -64,6 +62,8 @@ class CrossSiteTwitter
       publish_tweet!(tweet_db_obj)
     end
   end
+
+  private
 
   def persist_or_find_tweet!(tweet, account)
     tweet_db_obj = Tweet.find_by(tweet_id: tweet.id)
