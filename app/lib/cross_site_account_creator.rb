@@ -82,8 +82,8 @@ class CrossSiteAccountCreator
       user.approve!
       user.save!
 
-      cross_site_subscription.account = account
-      cross_site_subscription.save!
+      cross_site_subscription.account_id = account.id
+      cross_site_subscription.save!(validate: false)
 
       account
     end
