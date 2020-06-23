@@ -77,8 +77,4 @@ class CrossSiteSubscription < ApplicationRecord
       site
     end
   end
-
-  def account
-    @_account ||= Account.find_by('LOWER(username) = ?', normalized_account_username)
-  end
 end
