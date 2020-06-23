@@ -7,15 +7,17 @@
 #  site            :string
 #  foreign_user_id :string
 #  state           :string
-#  user_id         :bigint(8)        not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  sensitive       :boolean
+#  account_id      :bigint(8)
+#  created_by_id   :bigint(8)
 #
 class CrossSiteSubscription < ApplicationRecord
   WHITELISTED_SITES = %w[twitter instagram]
 
-  belongs_to :user
+  belongs_to :created_by, class_name: "User"
+  belongs_to :account, optional: true
   before_validation :downcase_fields!
   validates :foreign_user_id, uniqueness: { scope: :site, message: 'user already added for this site', case_sensitive: false }
   validate :valid_foreign_user

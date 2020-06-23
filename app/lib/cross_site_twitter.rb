@@ -44,49 +44,17 @@ class CrossSiteTwitter
     end
   end
 
-  def create_account_if_not_exist(twitter_user)
-    twitter_user = @client.user(twitter_user) if twitter_user.is_a? String
+  def create_account_if_not_exist(subscription)
+    twitter_user = @client.user(subscription.foreign_user_id)
 
     cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: twitter_user.screen_name.downcase)
 
-    account = Account.find_by(username: twitter_user.screen_name)
-    return account if account.present?
-
-    account = Account.new(username: twitter_user.screen_name)
-    password = SecureRandom.hex
-    user     = User.new(
-      email: "twitter_#{SecureRandom.hex(10)}@m.gretaoto.ca",
-      password: password,
-      agreement: true,
-      approved: true,
-      admin: false,
-      moderator: false,
-      confirmed_at: nil
-    )
-    user.settings['default_sensitive'] = true if  cross_site_subscription&.sensitive
-    user.settings['default_privacy'] = :unlisted if cross_site_subscription&.sensitive
-
-    account.note = twitter_user.description.presence || "Cross-Site-Subscribed account: https://www.twitter.com/@#{account.username}"
-    account.display_name = twitter_user.name
-    account.fields = [
-      {
-        name: 'Twitter', value: "https://www.twitter.com/@#{account.username}"
-      },
-      {
-        name: 'Status', value: 'Cross-Site-Subscribed account: unclaimed'
-      },
-    ]
-    account.header_remote_url = twitter_user.profile_banner_uri_https if twitter_user.profile_banner_uri?
-    account.avatar_remote_url = twitter_user.profile_image_uri_https if twitter_user.profile_image_uri?
-
-    account.suspended_at = nil
-    user.account         = account
-    user.skip_confirmation!
-    user.confirm!
-    user.approve!
-    user.save!
-
-    account
+    CrossSiteAccountCreator.new(cross_site_subscription,
+                                display_name: twitter_user.name,
+                                description: twitter_user.description.presence,
+                                banner_uri: twitter_user.profile_banner_uri? ? twitter_user.profile_banner_uri_https : nil,
+                                avatar_uri: twitter_user.profile_image_uri? ? twitter_user.profile_image_uri_https : nil
+    ).create_if_not_exist
   end
 
   private
