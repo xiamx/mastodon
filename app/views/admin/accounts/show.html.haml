@@ -140,6 +140,12 @@
             %td= @account.user_locale
             %td
 
+          - if @account.cross_site_subscription.present?
+            %tr
+              %th= t('admin.accounts.cross_site_subscription')
+              %td= "#{@account.cross_site_subscription.id}: #{@account.cross_site_subscription.site}: #{@account.cross_site_subscription.foreign_user_id}"
+              %td= "Sensitive: #{@account.cross_site_subscription.sensitive?}"
+
           %tr
             %th= t('admin.accounts.joined')
             %td
