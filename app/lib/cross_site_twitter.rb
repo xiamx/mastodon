@@ -48,7 +48,7 @@ class CrossSiteTwitter
     twitter_user = @client.user(cross_site_subscription.foreign_user_id)
 
     CrossSiteAccountCreator.new(cross_site_subscription,
-                                display_name: twitter_user.name,
+                                display_name: twitter_user.name || twitter_user.screen_name,
                                 description: twitter_user.description.presence,
                                 banner_uri: twitter_user.profile_banner_uri? ? twitter_user.profile_banner_uri_https : nil,
                                 avatar_uri: twitter_user.profile_image_uri? ? twitter_user.profile_image_uri_https : nil).create_if_not_exist
@@ -57,7 +57,7 @@ class CrossSiteTwitter
   private
 
   def process_tweet!(tweet)
-    cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: tweet.user.name.downcase)
+    cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: tweet.user.screen_name.downcase)
     account = create_account_if_not_exist(cross_site_subscription)
     tweet_db_obj = persist_or_find_tweet!(tweet, account)
     publish_tweet!(tweet_db_obj)
