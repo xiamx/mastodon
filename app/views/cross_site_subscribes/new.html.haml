@@ -2,6 +2,9 @@
   = t('cross_site_subscribes.create_cross_site_subscribes', title: site_title)
 
 = simple_form_for(@cross_site_subscription, url: cross_site_subscribes_path) do |f|
+
+  .flash-message= I18n.t('cross_site_subscribes.explain_after_add')
+
   = render 'shared/error_messages', object: @cross_site_subscription
 
   .fields-group

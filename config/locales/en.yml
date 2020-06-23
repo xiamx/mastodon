@@ -728,6 +728,7 @@ en:
     all_sites: All sites
     connect_follower_twitter_user: Connect Twitter User
     create_cross_site_subscribes: New Cross Site Subscribe
+    explain_after_add: After subscribing to this user, you will automatically follow them. Their most recent posts in the last few hours and all the posts in the future will be mirrored on GretaOto. There may be a delay for up to 30 minutes before the their first update appears.
     foreign_user_id: Foreign User ID
     instagram: Instagram
     manage_cross_site_subscribes: Manage Cross Site Subscribes

@@ -721,6 +721,7 @@ zh-CN:
     all_sites: 全部站点
     connect_follower_twitter_user: 连接 Twitter 用户
     create_cross_site_subscribes: 添加新跨站订阅
+    explain_after_add: 在添加该用户后，您将自动关注该用户。其在最近几个小时内的帖文将自动同步到 GretaOto。这个过程可能会有最多 30 分钟的延迟，清耐心等待。
     foreign_user_id: 跨站用户名
     instagram: Instagram
     manage_cross_site_subscribes: 管理跨站订阅
