@@ -31,9 +31,9 @@ class CrossSiteAccountCreator
   end
 
   def create_if_not_exist
-    ApplicationRecord.transaction do
-      return current_account if current_account.present?
+    return current_account if current_account.present?
 
+    ApplicationRecord.transaction do
       account = Account.new(username: screen_name)
       password = SecureRandom.hex
       user     = User.new(
