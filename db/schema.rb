@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_14_035808) do
+ActiveRecord::Schema.define(version: 2020_06_23_000548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -289,10 +289,13 @@ ActiveRecord::Schema.define(version: 2020_06_14_035808) do
     t.string "site"
     t.string "foreign_user_id"
     t.string "state"
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "sensitive"
+    t.bigint "account_id"
+    t.bigint "created_by_id"
+    t.index ["account_id"], name: "index_cross_site_subscriptions_on_account_id"
+    t.index ["created_by_id"], name: "index_cross_site_subscriptions_on_created_by_id"
     t.index ["site", "foreign_user_id"], name: "index_cross_site_subscriptions_on_site_and_foreign_user_id", unique: true
   end
 
@@ -981,6 +984,7 @@ ActiveRecord::Schema.define(version: 2020_06_14_035808) do
   add_foreign_key "bookmarks", "statuses", on_delete: :cascade
   add_foreign_key "conversation_mutes", "accounts", name: "fk_225b4212bb", on_delete: :cascade
   add_foreign_key "conversation_mutes", "conversations", on_delete: :cascade
+  add_foreign_key "cross_site_subscriptions", "users", column: "created_by_id", on_delete: :nullify
   add_foreign_key "custom_filters", "accounts", on_delete: :cascade
   add_foreign_key "devices", "accounts", on_delete: :cascade
   add_foreign_key "devices", "oauth_access_tokens", column: "access_token_id", on_delete: :cascade

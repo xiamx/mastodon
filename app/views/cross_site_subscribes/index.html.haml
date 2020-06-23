@@ -45,8 +45,8 @@
           - else
             %td= link_to subscription.pretty_acct, account_url(subscription.account)
           - if policy(:cross_site_subscription).show_created_by?
-            - if subscription.user&.account&.present?
-              %td= link_to "@#{subscription.user&.account&.pretty_acct}", account_path(subscription.user&.account)
+            - if subscription.created_by&.account&.present?
+              %td= link_to "@#{subscription.created_by&.account&.pretty_acct}", account_path(subscription.created_by&.account)
             - else
               %td= "User deleted"
           %td

@@ -23,8 +23,8 @@ class CrossSiteSubscribesController < ApplicationController
   def create
     authorize :cross_site_subscription, :create?
 
-    @cross_site_subscription      = CrossSiteSubscription.new(resource_params)
-    @cross_site_subscription.user = current_user
+    @cross_site_subscription            = CrossSiteSubscription.new(resource_params)
+    @cross_site_subscription.created_by = current_user
 
     return render :'errors/400' unless CrossSiteSubscription::WHITELISTED_SITES.include?(@cross_site_subscription.site)
 
