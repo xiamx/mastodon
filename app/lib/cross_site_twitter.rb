@@ -38,21 +38,20 @@ class CrossSiteTwitter
     @client.following.each do |twitter_user|
       CrossSiteSubscription.transaction(requires_new: true) do
         CrossSiteSubscription.where(site: 'twitter', foreign_user_id: twitter_user.screen_name.downcase).first_or_create!(
-            site: 'twitter', foreign_user_id: twitter_user.screen_name, created_by: owner
+          site: 'twitter', foreign_user_id: twitter_user.screen_name, created_by: owner
         )
       end
     end
   end
 
   def create_account_if_not_exist(cross_site_subscription)
-    twitter_user = @client.user(subscription.foreign_user_id)
+    twitter_user = @client.user(cross_site_subscription.foreign_user_id)
 
     CrossSiteAccountCreator.new(cross_site_subscription,
                                 display_name: twitter_user.name,
                                 description: twitter_user.description.presence,
                                 banner_uri: twitter_user.profile_banner_uri? ? twitter_user.profile_banner_uri_https : nil,
-                                avatar_uri: twitter_user.profile_image_uri? ? twitter_user.profile_image_uri_https : nil
-    ).create_if_not_exist
+                                avatar_uri: twitter_user.profile_image_uri? ? twitter_user.profile_image_uri_https : nil).create_if_not_exist
   end
 
   private
