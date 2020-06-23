@@ -57,8 +57,7 @@ class CrossSiteTwitter
   def process_tweet!(tweet)
     cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: tweet.user.screen_name.downcase)
     if cross_site_subscription.present?
-      account = create_account_if_not_exist(cross_site_subscription)
-      tweet_db_obj = persist_or_find_tweet!(tweet, account)
+      tweet_db_obj = persist_or_find_tweet!(tweet, cross_site_subscription.account)
       publish_tweet!(tweet_db_obj)
     end
   end
