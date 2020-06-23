@@ -59,7 +59,7 @@ class CrossSiteSubscription < ApplicationRecord
   def normalized_account_username
     case site
     when 'twitter'
-      foreign_user_id.downcase
+      foreign_user_id.downcase.gsub('.', '_')
     when 'instagram'
       foreign_user_id.downcase.gsub('.', '_') + "_" + shorten_site
     else
