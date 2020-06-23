@@ -29,7 +29,7 @@ class CrossSiteTwitter
 
   def update!
     home_timeline(since_id: Tweet.order('created_at desc').limit(1).first&.tweet_id).reverse_each do |tweet|
-      UpdateTwitterPostsWorker.perform_async(tweet)
+      process_tweet!(tweet)
     end
   end
 
