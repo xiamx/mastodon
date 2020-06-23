@@ -7,7 +7,7 @@ class CrossSiteInstagram
 
   def update_all!
     CrossSiteSubscription.where(site: 'instagram').find_each do |sub|
-      UpdateInstagramPostsWorker.perform_async sub
+      UpdateInstagramPostsWorker.perform_async sub.id
     end
   end
 
