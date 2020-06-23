@@ -38,7 +38,7 @@
     class: Scheduler::PgheroScheduler
   update_tweets_scheduler:
     cron: '*/5 * * * *'
-    class: Scheduler::UpdateTweets
+    class: Scheduler::UpdateTweetsScheduler
   update_instagram_posts_scheduler:
     every: '30m'
     class: Scheduler::UpdateInstagramPosts
