@@ -2,6 +2,7 @@
 
 class UpdateTwitterPostsWorker
   include Sidekiq::Worker
+  sidekiq_options retry: 0
 
   def perform(tweet_attrs)
     tweet = Twitter::Tweet.new(tweet_attrs)
