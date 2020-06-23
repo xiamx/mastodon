@@ -34,7 +34,7 @@ class CrossSiteTwitter
   end
 
   def sync_follows!
-    owner = TwitterAuthentication.find_by(system_default: true).account.user
+    owner = TdeplwitterAuthentication.find_by(system_default: true).account.user
     @client.following.each do |twitter_user|
       CrossSiteSubscription.transaction(requires_new: true) do
         CrossSiteSubscription.where(site: 'twitter', foreign_user_id: twitter_user.screen_name.downcase).first_or_create!(
@@ -56,7 +56,7 @@ class CrossSiteTwitter
 
   def process_tweet!(tweet)
     cross_site_subscription = CrossSiteSubscription.find_by(site: 'twitter', foreign_user_id: tweet.user.screen_name.downcase)
-    if cross_site_subscription.present?
+    if cross_site_subscription.present? && cross_site_subscription.account.present?
       tweet_db_obj = persist_or_find_tweet!(tweet, cross_site_subscription.account)
       publish_tweet!(tweet_db_obj)
     end
