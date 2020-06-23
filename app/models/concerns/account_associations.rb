@@ -60,5 +60,8 @@ module AccountAssociations
     # Hashtags
     has_and_belongs_to_many :tags
     has_many :featured_tags, -> { includes(:tag) }, dependent: :destroy, inverse_of: :account
+
+    # Cross Site Subscription
+    has_one :cross_site_subscription, inverse_of: :account
   end
 end
