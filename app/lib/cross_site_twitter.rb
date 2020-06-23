@@ -60,7 +60,6 @@ class CrossSiteTwitter
   private
 
   def process_tweet!(tweet)
-    account = create_account_if_not_exist(tweet.user)
     tweet_db_obj = persist_or_find_tweet!(tweet, account)
     publish_tweet!(tweet_db_obj)
   end
