@@ -16,7 +16,7 @@
 class CrossSiteSubscription < ApplicationRecord
   WHITELISTED_SITES = %w[twitter instagram]
 
-  belongs_to :created_by, class_name: "User"
+  belongs_to :created_by, class_name: "User", optional: true
   belongs_to :account, optional: true
   before_validation :downcase_fields!
   validates :foreign_user_id, uniqueness: { scope: :site, message: 'user already added for this site', case_sensitive: false }
