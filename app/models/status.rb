@@ -427,14 +427,21 @@ class Status < ApplicationRecord
   private
 
   def update_status_stat!(attrs)
+    retries = 0
+
     begin
       return if marked_for_destruction? || destroyed?
 
       status_stat.update(attrs)
     rescue ActiveRecord::RecordNotUnique
-      sleep(1)
-      retry
+      if (retries += 1) <= 3
+        sleep(retries)
+        retry
+      else
+        raise
+      end
     end
+  end
 
   def store_uri
     update_column(:uri, ActivityPub::TagManager.instance.uri_for(self)) if uri.nil?
