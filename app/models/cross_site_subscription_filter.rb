@@ -50,7 +50,7 @@ class CrossSiteSubscriptionFilter
     when 'all'
       CrossSiteSubscription.all
     when 'added_by_me'
-      CrossSiteSubscription.where(user: user)
+      CrossSiteSubscription.where(created_by: user)
     else
       raise "Unknown relationship: #{value}"
     end
