@@ -44,35 +44,34 @@
       %button= t('admin.accounts.search')
       = link_to t('admin.accounts.reset'), admin_accounts_path, class: 'button negative'
 
-.simple_form
-  %table.table.table--invites
-    %thead
+%table.table.table--invites
+  %thead
+    %tr
+      %th
+      %th= t('cross_site_subscribes.site')
+      %th= t('cross_site_subscribes.foreign_user_id')
+      - if policy(:cross_site_subscription).show_created_by?
+        %th= t('cross_site_subscribes.add_by')
+      %th
+  %tbody
+    - @cross_site_subscriptions.each do |subscription|
       %tr
-        %th
-        %th= t('cross_site_subscribes.site')
-        %th= t('cross_site_subscribes.foreign_user_id')
+        %td= subscription.id
+        %td= link_to subscription.site, subscription.site_user_url
+        - if subscription.account.nil?
+          %td= subscription.pretty_acct
+        - else
+          %td= link_to subscription.pretty_acct, account_url(subscription.account)
         - if policy(:cross_site_subscription).show_created_by?
-          %th= t('cross_site_subscribes.add_by')
-        %th
-    %tbody
-      - @cross_site_subscriptions.each do |subscription|
-        %tr
-          %td= subscription.id
-          %td= link_to subscription.site, subscription.site_user_url
-          - if subscription.account.nil?
-            %td= subscription.pretty_acct
+          - if subscription.created_by&.account&.present?
+            %td= link_to "@#{subscription.created_by&.account&.pretty_acct}", account_path(subscription.created_by&.account)
           - else
-            %td= link_to subscription.pretty_acct, account_url(subscription.account)
-          - if policy(:cross_site_subscription).show_created_by?
-            - if subscription.created_by&.account&.present?
-              %td= link_to "@#{subscription.created_by&.account&.pretty_acct}", account_path(subscription.created_by&.account)
-            - else
-              %td= "User deleted"
-          - if subscription.account.present?
-            %td
-              = account_action_button(subscription.account)
-          - else
-            %td
+            %td= "User deleted"
+        - if subscription.account.present?
+          %td
+            = account_action_button(subscription.account)
+        - else
+          %td
 
 = paginate @cross_site_subscriptions
 
