@@ -4,6 +4,7 @@ class CrossSiteSubscriptionFilter
   KEYS = %i(
     relationship
     location
+    username
   ).freeze
 
   attr_reader :params, :user
@@ -40,6 +41,8 @@ class CrossSiteSubscriptionFilter
       relationship_scope(value)
     when 'location'
       location_scope(value)
+    when 'username'
+      CrossSiteSubscription.where('foreign_user_id ILIKE ?', "%#{value}%")
     else
       raise "Unknown filter: #{key}"
     end

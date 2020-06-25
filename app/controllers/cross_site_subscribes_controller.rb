@@ -3,7 +3,8 @@ class CrossSiteSubscribesController < ApplicationController
 
   layout 'admin'
 
-  before_action :authenticate_user!, :fetch_current_twitter_account
+  before_action :authenticate_user!, except: :index
+  before_action :fetch_current_twitter_account
 
   PER_PAGE = 20
 
