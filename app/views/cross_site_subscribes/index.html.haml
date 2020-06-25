@@ -4,6 +4,17 @@
 - unless @current_twitter_account.present?
   %p= link_to t('cross_site_subscribes.connect_follower_twitter_user'), new_twitter_authentications_path, class: 'button'
 
+.flash-message= I18n.t('cross_site_subscribes.explain_after_add')
+
+%p
+  = link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
+  - if Flipper.enabled?(:cross_site_instagram, current_user)
+    = link_to t('cross_site_subscribes.add_instagram_user'), new_cross_site_subscribe_path(site: :instagram), class: 'button'
+  - if Flipper.enabled?(:cross_site_bilibili, current_user)
+    = link_to t('cross_site_subscribes.add_bilibili_user'), new_cross_site_subscribe_path(site: :bilibili), class: 'button'
+
+%hr
+
 .filters
   .filter-subset
     %strong= t 'cross_site_subscribes.relationship'
@@ -18,14 +29,20 @@
       %li= filter_link_to t('cross_site_subscribes.twitter'), location: :twitter
       %li= filter_link_to t('cross_site_subscribes.instagram'), location: :instagram
 
-.flash-message= I18n.t('cross_site_subscribes.explain_after_add')
+= form_tag cross_site_subscribes_url, method: 'GET', class: 'simple_form' do
+  .fields-group
+    - AccountFilter::KEYS.each do |key|
+      - if params[key].present?
+        = hidden_field_tag key, params[key]
 
-%p
-  = link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
-  - if Flipper.enabled?(:cross_site_instagram, current_user)
-    = link_to t('cross_site_subscribes.add_instagram_user'), new_cross_site_subscribe_path(site: :instagram), class: 'button'
-  - if Flipper.enabled?(:cross_site_bilibili, current_user)
-    = link_to t('cross_site_subscribes.add_bilibili_user'), new_cross_site_subscribe_path(site: :bilibili), class: 'button'
+    - %i(username).each do |key|
+      - unless key == :by_domain && params[:remote].blank?
+        .input.string.optional
+          = text_field_tag key, params[key], class: 'string optional', placeholder: I18n.t("admin.accounts.#{key}")
+
+    .actions
+      %button= t('admin.accounts.search')
+      = link_to t('admin.accounts.reset'), admin_accounts_path, class: 'button negative'
 
 .simple_form
   %table.table.table--invites
@@ -51,7 +68,11 @@
               %td= link_to "@#{subscription.created_by&.account&.pretty_acct}", account_path(subscription.created_by&.account)
             - else
               %td= "User deleted"
-          %td
+          - if subscription.account.present?
+            %td
+              = account_action_button(subscription.account)
+          - else
+            %td
 
 = paginate @cross_site_subscriptions
 
