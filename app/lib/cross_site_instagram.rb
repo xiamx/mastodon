@@ -66,6 +66,7 @@ class CrossSiteInstagram
 
     media_attachments = process_attachments(post_db_obj)
     PostStatusService.new.call(account, text: post_db_obj.full_text, media_ids: media_attachments.map(&:id))
+    ActivityTracker.record('activity:logins', account.user.id)
     post_db_obj.publish!
   end
 
