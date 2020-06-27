@@ -4,6 +4,7 @@
 - content_for :header_tags do
   %link{ rel: 'canonical', href: about_url }/
   = render partial: 'shared/og'
+  = javascript_pack_tag 'about', integrity: true, crossorigin: 'anonymous'
 
 .landing
   .landing__brand
@@ -77,3 +78,13 @@
                 %span
                   = t 'about.active_count_after'
                   %abbr{ title: t('about.active_footnote') } *
+.page-header
+  %h1= t('about.see_whats_happening')
+
+  - if Setting.show_known_fediverse_at_about_page
+    %p= t('about.browse_public_posts')
+  - else
+    %p= t('about.browse_local_posts')
+
+#mastodon-timeline{ data: { props: Oj.dump(default_props.merge(local: !Setting.show_known_fediverse_at_about_page)) }}
+#modal-container
