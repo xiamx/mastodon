@@ -42,6 +42,11 @@
       .dashboard__counters__num{ title: number_with_delimiter(@queue_backlog, strip_insignificant_zeros: true) }
         = number_to_human @queue_backlog, strip_insignificant_zeros: true
       .dashboard__counters__label= t 'admin.dashboard.backlog'
+  %div
+    = link_to admin_accounts_url(local: 1, recent: 1) do
+      .dashboard__counters__num{ title: number_with_delimiter(@users_count, strip_insignificant_zeros: true) }
+        = number_to_human @cross_site_users_count, strip_insignificant_zeros: true
+      .dashboard__counters__label= t 'admin.dashboard.total_cross_site_users'
 
 .dashboard__widgets
   .dashboard__widgets__users
