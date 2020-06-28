@@ -49,7 +49,7 @@ class CrossSiteTwitter
 
     CrossSiteAccountCreator.new(cross_site_subscription,
                                 display_name: twitter_user.name || twitter_user.screen_name,
-                                description: twitter_user.description.presence,
+                                description: "Mirrored twitter user. not #{twitter_user.screen_name} themself. #{twitter_user.description.presence}",
                                 banner_uri: twitter_user.profile_banner_uri? ? twitter_user.profile_banner_uri_https : nil,
                                 avatar_uri: twitter_user.profile_image_uri? ? twitter_user.profile_image_uri_https : nil).create_if_not_exist
   end
