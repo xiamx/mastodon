@@ -78,7 +78,7 @@ class CrossSiteTwitter
 
     media_attachments = process_attachments(tweet_db_obj)
     PostStatusService.new.call(account, text: tweet_db_obj.full_text, media_ids: media_attachments.map(&:id))
-    ActivityTracker.record('activity:logins', account.user.id)
+    ActivityTracker.record('activity:logins', account.user.id) if account.user.present?
     tweet_db_obj.publish!
   end
 
