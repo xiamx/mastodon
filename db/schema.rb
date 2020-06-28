@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_28_144617) do
+ActiveRecord::Schema.define(version: 2020_06_28_151124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -294,6 +294,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_144617) do
     t.boolean "sensitive"
     t.bigint "account_id"
     t.bigint "created_by_id"
+    t.boolean "public"
     t.index ["account_id"], name: "index_cross_site_subscriptions_on_account_id"
     t.index ["created_by_id"], name: "index_cross_site_subscriptions_on_created_by_id"
     t.index ["site", "foreign_user_id"], name: "index_cross_site_subscriptions_on_site_and_foreign_user_id", unique: true

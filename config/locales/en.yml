@@ -742,6 +742,7 @@ en:
     manage_cross_site_subscribes: Manage Cross Site Subscribes
     relationship: Relationship
     sensitive: Contains sensitive content
+    media_or_influencer: Media or influencer?
     site: Site
     subscribe: Subscribe
     twitter: Twitter

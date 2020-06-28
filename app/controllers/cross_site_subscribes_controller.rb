@@ -63,7 +63,7 @@ class CrossSiteSubscribesController < ApplicationController
   end
 
   def resource_params
-    params.require(:cross_site_subscription).permit(:site, :foreign_user_id, :sensitive)
+    params.require(:cross_site_subscription).permit(:site, :foreign_user_id, :sensitive, :public)
   end
 
 

@@ -11,7 +11,8 @@
     = f.input :site, wrapper: :with_label, label: I18n.t('cross_site_subscribes.site'), input_html: {readonly: :true}
 
     = f.input :foreign_user_id, wrapper: :with_label, label: I18n.t('cross_site_subscribes.foreign_user_id'), placeholder: "@GretaotoM"
-    = f.input :sensitive, wrapper: :with_label, label: I18n.t('cross_site_subscribes.sensitive'), placeholder: "@GretaotoM"
+    = f.input :sensitive, wrapper: :with_label, label: I18n.t('cross_site_subscribes.sensitive')
+    = f.input :public, wrapper: :with_label, label: I18n.t('cross_site_subscribes.media_or_influencer')
 
   .actions
     = f.button :button, t('cross_site_subscribes.subscribe'), type: :submit
