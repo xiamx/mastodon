@@ -46,7 +46,7 @@ class CrossSiteAccountCreator
         confirmed_at: nil
       )
       user.settings['default_sensitive'] = true if cross_site_subscription&.sensitive
-      user.settings['default_privacy'] = :unlisted if cross_site_subscription&.sensitive
+      user.settings['default_privacy'] = :unlisted
 
       account.note = description.presence || "Cross-Site-Subscribed account: #{site} @#{screen_name}"
       account.display_name = display_name
