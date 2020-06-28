@@ -50,6 +50,7 @@ class CrossSiteAccountCreator
 
       account.note = description.presence || "Cross-Site-Subscribed account: #{site} @#{screen_name}"
       account.display_name = display_name
+      account.bot = true
       if site == 'twitter'
         account.fields = [
           {
