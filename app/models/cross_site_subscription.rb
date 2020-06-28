@@ -12,6 +12,7 @@
 #  sensitive       :boolean
 #  account_id      :bigint(8)
 #  created_by_id   :bigint(8)
+#  public          :boolean
 #
 class CrossSiteSubscription < ApplicationRecord
   WHITELISTED_SITES = %w[twitter instagram]
