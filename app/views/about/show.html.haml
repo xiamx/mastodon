@@ -9,7 +9,7 @@
 .landing
   .landing__brand
     = link_to root_url, class: 'brand' do
-      = svg_logo_full
+      = image_tag @instance_presenter.mascot&.file&.url
       %span.brand__tagline=t 'about.tagline'
 
   .landing__grid
