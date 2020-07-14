@@ -12,5 +12,8 @@ class ActivityPub::ProcessingWorker
   rescue ActiveRecord::StaleObjectError => e
     sleep(1)
     retry
+  rescue Mastodon::RaceConditionError => e
+    sleep(3)
+    retry
   end
 end
