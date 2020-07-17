@@ -107,7 +107,7 @@ gem 'rdf-normalize', '~> 0.4'
 gem 'twitter' , '~> 7.0'
 gem 'oauth', '~> 0.5'
 
-gem "sentry-raven"
+gem "sentry-raven", require: 'sentry-raven-without-integrations'
 gem 'puma_worker_killer'
 gem 'flipper'
 gem 'flipper-redis'
