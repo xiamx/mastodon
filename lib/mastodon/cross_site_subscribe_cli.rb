@@ -13,6 +13,7 @@ module Mastodon
     end
 
     option :all, type: :boolean
+    option :concurrency, type: :numeric, default: 5, aliases: [:c]
     desc 'mute [SITE] [foreign_user_id]', 'mute a cross site subscribed user'
     def mute(site = nil, foreign_user_id = nil)
       if options[:all]
@@ -24,7 +25,7 @@ module Mastodon
         exit(1)
       end
 
-      CrossSiteSubscription.where(where_clause).find_each do |sub|
+      parallelize_with_progress(CrossSiteSubscription.where(where_clause)) do |sub|
         account = sub.account
         next if account.nil?
 
