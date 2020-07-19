@@ -12,6 +12,7 @@ require_relative 'mastodon/domains_cli'
 require_relative 'mastodon/preview_cards_cli'
 require_relative 'mastodon/cache_cli'
 require_relative 'mastodon/upgrade_cli'
+require_relative 'mastodon/cross_site_subscribe_cli'
 require_relative 'mastodon/version'
 
 module Mastodon
@@ -52,6 +53,9 @@ module Mastodon
 
     desc 'upgrade SUBCOMMAND ...ARGS', 'Various version upgrade utilities'
     subcommand 'upgrade', Mastodon::UpgradeCLI
+
+    desc 'cross_site_subscribes SUBCOMMAND ...ARGS', 'Manage cross site subscriptions'
+    subcommand 'cross_site_subscribes', Mastodon::CrossSiteSubscribeCli
 
     option :dry_run, type: :boolean
     desc 'self-destruct', 'Erase the server from the federation'
