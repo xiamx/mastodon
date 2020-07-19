@@ -19,7 +19,7 @@ module Mastodon
       if options[:all]
         where_clause = nil
       elsif !site.nil? && !foreign_user_id.nil?
-        where_clause = { site: site, foreign_user_id: foreign_user_id }
+        where_clause = { site: site, foreign_user_id: foreign_user_id.downcase }
       else
         say('No cross_site_subscription(s) given', :red)
         exit(1)
