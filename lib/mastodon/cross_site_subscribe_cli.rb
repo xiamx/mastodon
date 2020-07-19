@@ -31,6 +31,8 @@ module Mastodon
         user = account.user
         next if user.nil?
 
+        next if user.settings['default_privacy'] == :unlisted
+
         user.settings['default_privacy'] = :unlisted
         user.save!
 
