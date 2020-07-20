@@ -19,7 +19,7 @@ class CrossSiteSubscription < ApplicationRecord
 
   belongs_to :created_by, class_name: "User", optional: true
   belongs_to :account, optional: true
-  before_validation :downcase_fields!
+  before_validation :normalize_fields
   validates :foreign_user_id, uniqueness: { scope: :site, message: 'user already added for this site', case_sensitive: false }
   validate :valid_foreign_user
 
@@ -36,8 +36,9 @@ class CrossSiteSubscription < ApplicationRecord
     errors.add(:foreign_user_id, "Can't find that twitter user") if twitter? && !CrossSiteTwitter.new.user_exists?(foreign_user_id)
   end
 
-  def downcase_fields!
+  def normalize_fields
     foreign_user_id.downcase!
+    foreign_user_id.strip!
     site.downcase!
   end
 

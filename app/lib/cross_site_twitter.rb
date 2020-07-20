@@ -77,18 +77,23 @@ class CrossSiteTwitter
     account = tweet_db_obj.account
 
     media_attachments = process_attachments(tweet_db_obj)
-    PostStatusService.new.call(account, text: tweet_db_obj.full_text, media_ids: media_attachments.map(&:id))
+    PostStatusService.new.call(
+      account,
+      text: tweet_db_obj.full_text,
+      visibility: "unlisted",
+      media_ids: media_attachments.map(&:id)
+    )
     ActivityTracker.record('activity:logins', account.user.id) if account.user.present?
     tweet_db_obj.publish!
   end
 
   def process_attachments(tweet_db_obj)
+    media_attachments = []
+
     account = tweet_db_obj.account
     payload = ActiveSupport::JSON.decode(tweet_db_obj.payload)
     media_array = payload['entities']['media']
     return [] if media_array.blank?
-
-    media_attachments = []
 
     media_array.each do |media|
       next if media['media_url'].blank? || media_attachments.size >= 4
@@ -101,7 +106,7 @@ class CrossSiteTwitter
         media_attachment.file_remote_url = href
         media_attachment.save
       rescue Mastodon::UnexpectedResponseError, HTTP::TimeoutError, HTTP::ConnectionError, OpenSSL::SSL::SSLError
-        RedownloadMediaWorker.perform_in(rand(30..600).seconds, media_attachment.id)
+        RedownloadMediaWorker.perform_in(rand(30..600).seconds, media_attachment.id) if media_attachment
       end
     end
 
