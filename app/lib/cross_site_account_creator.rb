@@ -45,8 +45,6 @@ class CrossSiteAccountCreator
         moderator: false,
         confirmed_at: nil
       )
-      user.settings['default_sensitive'] = true if cross_site_subscription&.sensitive
-      user.settings['default_privacy'] = cross_site_subscription&.public ? :public : :unlisted
 
       account.note = description.presence || "Cross-Site-Subscribed account: #{site} @#{screen_name}"
       account.display_name = "#{display_name} (mirrored)"
