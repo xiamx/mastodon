@@ -47,7 +47,7 @@ class CrossSiteAccountCreator
       )
 
       account.note = description.presence || "Cross-Site-Subscribed account: #{site} @#{screen_name}"
-      account.display_name = "#{display_name.truncate(30 - 11 - 3)} (mirrored)"
+      account.display_name = "#{display_name.truncate(15)} (mirrored)"
       account.bot = true
       if site == 'twitter'
         account.fields = [
