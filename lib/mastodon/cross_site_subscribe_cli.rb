@@ -12,6 +12,13 @@ module Mastodon
       true
     end
 
+    desc 'prune', 'prune all non followed user and those without created_by and have less than 2 followers'
+    def prune
+      CrossSiteSubscription.where(created_by: nil).select { |s| (s.account&.followers_count || 0) < 3 }.each(&:destroy)
+      CrossSiteSubscription.all.select { |s| (s.account&.followers_count || 0) == 0 }.each(&:destroy)
+      say('OK', :green)
+    end
+
     option :all, type: :boolean
     option :concurrency, type: :numeric, default: 5, aliases: [:c]
     desc 'mute [SITE] [foreign_user_id]', 'mute a cross site subscribed user'
@@ -44,7 +51,6 @@ module Mastodon
           status.save!
         end
         say("All #{sub.site} #{sub.foreign_user_id} statuses are now unlisted", :green)
-
       end
       say('OK', :green)
     end
