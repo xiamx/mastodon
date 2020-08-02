@@ -20,6 +20,7 @@ class CrossSiteSubscription < ApplicationRecord
   belongs_to :created_by, class_name: "User", optional: true
   belongs_to :account, optional: true
   before_validation :normalize_fields
+  before_destroy :destroy_associated_resources
   validates :foreign_user_id, uniqueness: { scope: :site, message: 'user already added for this site', case_sensitive: false }
   validate :valid_foreign_user
 
@@ -78,5 +79,15 @@ class CrossSiteSubscription < ApplicationRecord
     else
       site
     end
+  end
+
+  def destroy_associated_resources
+    case site
+    when 'twitter'
+      CrossSiteTwitter.new.unfollow(foreign_user_id)
+    else
+      # do nothing
+    end
+    SuspendAccountService.new.call(account, reserve_email: false)
   end
 end

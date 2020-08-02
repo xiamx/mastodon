@@ -70,6 +70,8 @@
         - if subscription.account.present?
           %td
             = account_action_button(subscription.account)
+            - if policy(:cross_site_subscription).destroy?
+              = link_to "delete", "#{cross_site_subscribes_path}/#{subscription.id}", method: :delete, data: {confirm: "are you sure?"}
         - else
           %td
 

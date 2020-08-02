@@ -15,6 +15,10 @@ class CrossSiteTwitter
     @client.follow(twitter_handle)
   end
 
+  def unfollow(twitter_handle)
+    @client.unfollow(twitter_handle)
+  end
+
   def user_exists?(username)
     @client.user?(username)
   end

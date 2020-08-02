@@ -14,7 +14,7 @@ class CrossSiteSubscriptionPolicy < ApplicationPolicy
   end
 
   def destroy?
-    owner? || (Setting.min_invite_role == 'admin' ? admin? : staff?)
+    staff?
   end
 
   def show_created_by?
