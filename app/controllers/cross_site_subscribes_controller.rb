@@ -48,7 +48,7 @@ class CrossSiteSubscribesController < ApplicationController
     authorize :cross_site_subscription, :destroy?
     CrossSiteSubscription.find(params[:id]).destroy!
     respond_to do |format|
-      format.html { redirect_to cross_site_subscribes_url, notice: 'Successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Successfully destroyed.' }
       format.json { head :no_content }
     end
   end
