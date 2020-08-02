@@ -17,6 +17,8 @@ class CrossSiteTwitter
 
   def unfollow(twitter_handle)
     @client.unfollow(twitter_handle)
+  rescue Twitter::Error::NotFound
+    nil
   end
 
   def user_exists?(username)
