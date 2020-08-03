@@ -108,6 +108,8 @@ gem 'rdf-normalize', '~> 0.4'
 gem 'twitter' , '~> 7.0'
 gem 'oauth', '~> 0.5'
 
+gem "sentry-raven"
+
 group :development, :test do
   gem 'fabrication', '~> 2.21'
   gem 'fuubar', '~> 2.5'
