@@ -36,3 +36,6 @@
   pghero_scheduler:
     cron: '0 0 * * *'
     class: Scheduler::PgheroScheduler
+  update_tweets_scheduler:
+    cron: '*/5 * * * *'
+    class: Scheduler::UpdateTweets

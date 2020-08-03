@@ -24,6 +24,7 @@ class CrossSiteSubscribesController < ApplicationController
     render :'errors/400' if resource_params[:site] != 'twitter'
 
     if @cross_site_subscription.save
+      CrossSiteTwitter.new.follow(@cross_site_subscription.foreign_user_id)
       redirect_to cross_site_subscribes_path
     else
       @cross_site_subscriptions = subscription_list
