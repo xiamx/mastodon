@@ -161,6 +161,11 @@ Rails.application.routes.draw do
   resources :filters, except: [:show]
   resource :relationships, only: [:show, :update]
   resources :cross_site_subscribes, only: [:index, :new, :create, :destroy]
+  resource :twitter_authentications, only: [:new, :create] do
+    collection do
+      get 'callback'
+    end
+  end
 
   get '/public', to: 'public_timelines#show', as: :public_timeline
   get '/media_proxy/:id/(*any)', to: 'media_proxy#show', as: :media_proxy

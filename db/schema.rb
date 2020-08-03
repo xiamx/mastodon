@@ -849,6 +849,16 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.index ["account_id"], name: "index_tweets_on_account_id"
   end
 
+  create_table "twitter_authentications", force: :cascade do |t|
+    t.string "access_token"
+    t.string "access_token_secret"
+    t.boolean "system_default"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_twitter_authentications_on_account_id"
+  end
+
   create_table "unavailable_domains", force: :cascade do |t|
     t.string "domain", default: "", null: false
     t.datetime "created_at", null: false
@@ -1022,6 +1032,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
   add_foreign_key "statuses_tags", "tags", name: "fk_3081861e21", on_delete: :cascade
   add_foreign_key "tombstones", "accounts", on_delete: :cascade
   add_foreign_key "tweets", "accounts", on_delete: :cascade
+  add_foreign_key "twitter_authentications", "accounts"
   add_foreign_key "user_invite_requests", "users", on_delete: :cascade
   add_foreign_key "users", "accounts", name: "fk_50500f500d", on_delete: :cascade
   add_foreign_key "users", "invites", on_delete: :nullify

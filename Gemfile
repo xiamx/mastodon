@@ -106,6 +106,7 @@ gem 'json-ld-preloaded', '~> 3.1'
 gem 'rdf-normalize', '~> 0.4'
 
 gem 'twitter' , '~> 7.0'
+gem 'oauth', '~> 0.5'
 
 group :development, :test do
   gem 'fabrication', '~> 2.21'

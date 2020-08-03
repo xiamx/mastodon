@@ -1,6 +1,9 @@
 - content_for :page_title do
   = t('cross_site_subscribes.manage_cross_site_subscribes', title: site_title)
 
+- unless @current_twitter_account.present?
+  %p= link_to t('cross_site_subscribes.connect_follower_twitter_user'), new_twitter_authentications_path, class: 'button'
+
 %p= link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
 
 .simple_form
@@ -8,17 +11,20 @@
     %thead
       %tr
         %th
-        %th= t('cross_site_subscribes.table.site')
-        %th= t('cross_site_subscribes.table.foreign_user_id')
-        %th= t('cross_site_subscribes.table.add_by')
+        %th= t('cross_site_subscribes.site')
+        %th= t('cross_site_subscribes.foreign_user_id')
+        %th= t('cross_site_subscribes.add_by')
         %th
     %tbody
       - @cross_site_subscriptions.each do |subscription|
         %tr
           %td= subscription.id
-          %td= subscription.site
-          %td= subscription.foreign_user_id
-          %td= subscription.user.account.username
+          %td= link_to subscription.site, subscription.site_user_url
+          - if subscription.account.nil?
+            %td= subscription.pretty_acct
+          - else
+            %td= link_to subscription.pretty_acct, account_url(subscription.account)
+          %td= link_to "@#{subscription.user.account.pretty_acct}", account_path(subscription.user.account)
           %td
 
 = paginate @cross_site_subscriptions

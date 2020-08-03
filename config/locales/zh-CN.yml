@@ -1316,3 +1316,12 @@ zh-CN:
   verification:
     explanation_html: 您可以 <strong>验证自己是个人资料元数据中的某个链接的所有者</strong>。 为此，被链接网站必须包含一个到您的 Mastodon 主页的链接。链接中 <strong>必须</strong> 包括 <code>rel="me"</code> 属性。链接的文本内容可以随意填写。例如：
     verification: 验证
+  cross_site_subscribes:
+    create_cross_site_subscribes: 添加新跨站订阅
+    manage_cross_site_subscribes: 管理跨站订阅
+    connect_follower_twitter_user: 连接 Twitter 用户
+    add_twitter_user: 添加 Twitter 用户
+    site: 站点
+    foreign_user_id: 跨站用户名
+    add_by: 添加人
+    subscribe: 订阅

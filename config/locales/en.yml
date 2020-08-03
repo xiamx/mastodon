@@ -1337,3 +1337,13 @@ en:
   verification:
     explanation_html: 'You can <strong>verify yourself as the owner of the links in your profile metadata</strong>. For that, the linked website must contain a link back to your Mastodon profile. The link back <strong>must</strong> have a <code>rel="me"</code> attribute. The text content of the link does not matter. Here is an example:'
     verification: Verification
+  cross_site_subscribes:
+    create_cross_site_subscribes: New Cross Site Subscribe
+    manage_cross_site_subscribes: Manage Cross Site Subscribes
+    connect_follower_twitter_user: Connect Twitter User
+    add_twitter_user: Add Twitter User
+    site: Site
+    foreign_user_id: Foreign User ID
+    add_by: Added by
+    subscribe: Subscribe
+
