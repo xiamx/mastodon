@@ -285,6 +285,16 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.index ["uri"], name: "index_conversations_on_uri", unique: true
   end
 
+  create_table "cross_site_subscriptions", force: :cascade do |t|
+    t.string "site"
+    t.string "foreign_user_id"
+    t.string "state"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_cross_site_subscriptions_on_user_id"
+  end
+
   create_table "custom_emoji_categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -746,8 +756,8 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
   create_table "status_pins", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "status_id", null: false
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["account_id", "status_id"], name: "index_status_pins_on_account_id_and_status_id", unique: true
   end
 
