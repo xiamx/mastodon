@@ -483,7 +483,6 @@ zh-CN:
       unresolved: 未处理
       updated_at: 更新时间
     settings:
-      cross_site_subscribe: 跨站订阅 (Twitter)
       activity_api_enabled:
         desc_html: 本站一周内的嘟文数、活跃用户数以及新用户数
         title: 公开用户活跃度的统计数据
@@ -493,6 +492,7 @@ zh-CN:
       contact_information:
         email: 用于联系的公开电子邮件地址
         username: 用于联系的公开用户名
+      cross_site_subscribe: 跨站订阅 (Twitter)
       custom_css:
         desc_html: 通过 CSS 代码调整所有页面的显示效果
         title: 自定义 CSS
@@ -720,6 +720,23 @@ zh-CN:
     errors:
       invalid_key: 不是有效的 Ed25519 或者 Curve25519 密钥
       invalid_signature: 不是有效的 Ed25519 签名
+  cross_site_subscribes:
+    add_by: 添加人
+    add_instagram_user: 添加 Instagram 用户
+    add_twitter_user: 添加 Twitter 用户
+    all_cross_site_users: 全部跨站用户
+    all_sites: 全部站点
+    connect_follower_twitter_user: 连接 Twitter 用户
+    create_cross_site_subscribes: 添加新跨站订阅
+    foreign_user_id: 跨站用户名
+    instagram: Instagram
+    manage_cross_site_subscribes: 管理跨站订阅
+    relationship: 关系
+    sensitive: 包含敏感内容
+    site: 站点
+    subscribe: 订阅
+    twitter: Twitter
+    users_added_by_me: 我添加的跨站用户
   date:
     formats:
       default: "%Y年%m月%d日"
@@ -1317,20 +1334,3 @@ zh-CN:
   verification:
     explanation_html: 您可以 <strong>验证自己是个人资料元数据中的某个链接的所有者</strong>。 为此，被链接网站必须包含一个到您的 Mastodon 主页的链接。链接中 <strong>必须</strong> 包括 <code>rel="me"</code> 属性。链接的文本内容可以随意填写。例如：
     verification: 验证
-  cross_site_subscribes:
-    create_cross_site_subscribes: 添加新跨站订阅
-    manage_cross_site_subscribes: 管理跨站订阅
-    connect_follower_twitter_user: 连接 Twitter 用户
-    add_twitter_user: 添加 Twitter 用户
-    add_instagram_user: 添加 Instagram 用户
-    site: 站点
-    foreign_user_id: 跨站用户名
-    add_by: 添加人
-    subscribe: 订阅
-    sensitive: 包含敏感内容
-    all_sites: 全部站点
-    twitter: Twitter
-    instagram: Instagram
-    relationship: 关系
-    all_cross_site_users: 全部跨站用户
-    users_added_by_me: 我添加的跨站用户

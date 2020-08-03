@@ -493,7 +493,6 @@ en:
       unresolved: Unresolved
       updated_at: Updated
     settings:
-      cross_site_subscribe: Cross Site Subscriptions
       activity_api_enabled:
         desc_html: Counts of locally posted statuses, active users, and new registrations in weekly buckets
         title: Publish aggregate statistics about user activity
@@ -503,6 +502,7 @@ en:
       contact_information:
         email: Business e-mail
         username: Contact username
+      cross_site_subscribe: Cross Site Subscriptions
       custom_css:
         desc_html: Modify the look with CSS loaded on every page
         title: Custom CSS
@@ -730,6 +730,21 @@ en:
     errors:
       invalid_key: is not a valid Ed25519 or Curve25519 key
       invalid_signature: is not a valid Ed25519 signature
+  cross_site_subscribes:
+    add_by: Added by
+    add_instagram_user: Add Instagram User
+    add_twitter_user: Add Twitter User
+    all_sites: All sites
+    connect_follower_twitter_user: Connect Twitter User
+    create_cross_site_subscribes: New Cross Site Subscribe
+    foreign_user_id: Foreign User ID
+    instagram: Instagram
+    manage_cross_site_subscribes: Manage Cross Site Subscribes
+    relationship: Relationship
+    sensitive: Contains sensitive content
+    site: Site
+    subscribe: Subscribe
+    twitter: Twitter
   date:
     formats:
       default: "%b %d, %Y"
@@ -1338,18 +1353,3 @@ en:
   verification:
     explanation_html: 'You can <strong>verify yourself as the owner of the links in your profile metadata</strong>. For that, the linked website must contain a link back to your Mastodon profile. The link back <strong>must</strong> have a <code>rel="me"</code> attribute. The text content of the link does not matter. Here is an example:'
     verification: Verification
-  cross_site_subscribes:
-    create_cross_site_subscribes: New Cross Site Subscribe
-    manage_cross_site_subscribes: Manage Cross Site Subscribes
-    connect_follower_twitter_user: Connect Twitter User
-    add_twitter_user: Add Twitter User
-    add_instagram_user: Add Instagram User
-    site: Site
-    foreign_user_id: Foreign User ID
-    sensitive: Contains sensitive content
-    add_by: Added by
-    subscribe: Subscribe
-    all_sites: All sites
-    twitter: Twitter
-    instagram: Instagram
-    relationship: Relationship
