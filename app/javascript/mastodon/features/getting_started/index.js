@@ -36,7 +36,7 @@ const messages = defineMessages({
   security: { id: 'navigation_bar.security', defaultMessage: 'Security' },
   menu: { id: 'getting_started.heading', defaultMessage: 'Getting started' },
   profile_directory: { id: 'getting_started.directory', defaultMessage: 'Profile directory' },
-  cross_site_subscribes: { id: 'getting_started.cross_site_subscribes', defaultMessage: 'Twitter subscriptions' },
+  cross_site_subscribes: { id: 'getting_started.cross_site_subscribes', defaultMessage: 'Twitter/Instagram subscriptions' },
 });
 
 const mapStateToProps = state => ({
@@ -101,10 +101,9 @@ class GettingStarted extends ImmutablePureComponent {
         <ColumnSubheading key={i++} text={intl.formatMessage(messages.discover)} />,
         <ColumnLink key={i++} icon='users' text={intl.formatMessage(messages.community_timeline)} to='/timelines/public/local' />,
         <ColumnLink key={i++} icon='globe' text={intl.formatMessage(messages.public_timeline)} to='/timelines/public' />,
-        <ColumnLink key={i++} icon='globe' text={intl.formatMessage(messages.cross_site_subscribes)} href='/cross_site_subscribes' />,
       );
 
-      height += 34 + 48*3;
+      height += 34 + 48*2;
 
       if (profile_directory) {
         navItems.push(
@@ -132,9 +131,10 @@ class GettingStarted extends ImmutablePureComponent {
       <ColumnLink key={i++} icon='bookmark' text={intl.formatMessage(messages.bookmarks)} to='/bookmarks' />,
       <ColumnLink key={i++} icon='star' text={intl.formatMessage(messages.favourites)} to='/favourites' />,
       <ColumnLink key={i++} icon='list-ul' text={intl.formatMessage(messages.lists)} to='/lists' />,
+      <ColumnLink key={i++} icon='globe' text={intl.formatMessage(messages.cross_site_subscribes)} href='/cross_site_subscribes' />,
     );
 
-    height += 48*4;
+    height += 48*5;
 
     if (myAccount.get('locked') || unreadFollowRequests > 0) {
       navItems.push(<ColumnLink key={i++} icon='user-plus' text={intl.formatMessage(messages.follow_requests)} badge={badgeDisplay(unreadFollowRequests, 40)} to='/follow_requests' />);

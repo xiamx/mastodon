@@ -4,7 +4,10 @@
 - unless @current_twitter_account.present?
   %p= link_to t('cross_site_subscribes.connect_follower_twitter_user'), new_twitter_authentications_path, class: 'button'
 
-%p= link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
+%p
+  = link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
+  - if Flipper.enabled?(:cross_site_instagram, current_user)
+    = link_to t('cross_site_subscribes.add_instagram_user'), new_cross_site_subscribe_path(site: :instagram), class: 'button'
 
 .simple_form
   %table.table.table--invites

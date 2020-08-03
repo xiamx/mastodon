@@ -1322,6 +1322,7 @@ zh-CN:
     manage_cross_site_subscribes: 管理跨站订阅
     connect_follower_twitter_user: 连接 Twitter 用户
     add_twitter_user: 添加 Twitter 用户
+    add_instagram_user: 添加 Instagram 用户
     site: 站点
     foreign_user_id: 跨站用户名
     add_by: 添加人
