@@ -108,6 +108,7 @@ GEM
     aws-sigv4 (1.2.1)
       aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.13)
+    bcrypt_pbkdf (1.0.1)
     better_errors (2.7.1)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -702,6 +703,7 @@ DEPENDENCIES
   addressable (~> 2.7)
   annotate (~> 3.1)
   aws-sdk-s3 (~> 1.73)
+  bcrypt_pbkdf
   better_errors (~> 2.7)
   binding_of_caller (~> 0.7)
   blurhash (~> 0.1)

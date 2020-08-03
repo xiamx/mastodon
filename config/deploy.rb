@@ -2,7 +2,7 @@
 
 lock '3.14.1'
 
-set :repo_url, ENV.fetch('REPO', 'https://github.com/xiamx/mastodon.git')
+set :repo_url, ENV.fetch('REPO', 'git@github.com:xiamx/mastodon.git')
 set :branch, ENV.fetch('BRANCH', 'master')
 
 set :application, 'mastodon'
