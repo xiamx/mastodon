@@ -33,8 +33,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_151124) do
     t.integer "lock_version", default: 0, null: false
     t.boolean "unread", default: false, null: false
     t.index ["account_id", "conversation_id", "participant_account_ids"], name: "index_unique_conversations", unique: true
-    t.index ["conversation_id"], name: "index_account_conversations_on_conversation_id"
-    t.index ["account_id"], name: "index_account_conversations_on_account_id"
   end
 
   create_table "account_domain_blocks", force: :cascade do |t|
@@ -214,8 +212,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_151124) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "announcement_id"], name: "index_announcement_mutes_on_account_id_and_announcement_id", unique: true
-    t.index ["account_id"], name: "index_announcement_mutes_on_account_id"
-    t.index ["announcement_id"], name: "index_announcement_mutes_on_announcement_id"
   end
 
   create_table "announcement_reactions", force: :cascade do |t|
