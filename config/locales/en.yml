@@ -1345,6 +1345,7 @@ en:
     add_twitter_user: Add Twitter User
     site: Site
     foreign_user_id: Foreign User ID
+    sensitive: Contains sensitive content
     add_by: Added by
     subscribe: Subscribe
 

@@ -10,6 +10,7 @@
 #  user_id         :bigint(8)        not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  sensitive       :boolean
 #
 class CrossSiteSubscription < ApplicationRecord
   belongs_to :user
