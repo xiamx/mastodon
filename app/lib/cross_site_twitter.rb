@@ -109,8 +109,8 @@ class CrossSiteTwitter
         media_attachment = MediaAttachment.create(account: account, remote_url: href)
         media_attachments << media_attachment
 
-        media_attachment.file_remote_url = href
-        media_attachment.save
+        media_attachment.download_file!
+        media_attachment.save!
       rescue Mastodon::UnexpectedResponseError, HTTP::TimeoutError, HTTP::ConnectionError, OpenSSL::SSL::SSLError
         RedownloadMediaWorker.perform_in(rand(30..600).seconds, media_attachment.id) if media_attachment
       end
