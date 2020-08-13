@@ -849,6 +849,9 @@
     color: lighten($ui-highlight-color, 8%);
   }
 
+  .status__content__show-translation-button,
+  +.status__content__read-more-button,
+  .status__content__read-more-button,
   .status__content__spoiler-link {
     background: $action-button-color;
 
@@ -926,21 +929,24 @@
 
 .status__content__read-more-button {
   display: block;
-  font-size: 15px;
-  line-height: 20px;
-  color: lighten($ui-highlight-color, 8%);
-  border: 0;
-  background: transparent;
-  padding: 0;
-  padding-top: 8px;
-  text-decoration: none;
+  margin-top: 8px;
+  // font-size: 15px;
+  // line-height: 20px;
+  // color: lighten($ui-highlight-color, 8%);
+  // border: 0;
+  // background: transparent;
+  // padding: 0;
+  // padding-top: 8px;
+  // text-decoration: none;
 
-  &:hover,
-  &:active {
-    text-decoration: underline;
-  }
+  // &:hover,
+  // &:active {
+  //   text-decoration: underline;
+  // }
 }
 
+.status__content__show-translation-button,
+.status__content__read-more-button,
 .status__content__spoiler-link {
   display: inline-block;
   border-radius: 2px;
@@ -1225,6 +1231,9 @@
       margin: -1px 0 0;
     }
 
+    .status__content__show-translation-button,
+    +.status__content__read-more-button,
+    .status__content__read-more-button,
     .status__content__spoiler-link {
       line-height: 24px;
       margin: -1px 0 0;
@@ -4751,6 +4760,8 @@ a.status-card.compact:hover {
     width: 48px;
   }
 
+  .status__content__show-translation-button,
+  .status__content__read-more-button,
   .status__content__spoiler-link {
     color: lighten($secondary-text-color, 8%);
   }
@@ -6954,7 +6965,7 @@ noscript {
         height: 100%;
         min-width: auto;
         min-height: auto;
-        vertical-align: bottom;
+        // vertical-align: bottom;
         object-fit: contain;
       }
     }
