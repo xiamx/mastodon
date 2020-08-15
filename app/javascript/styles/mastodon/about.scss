@@ -694,6 +694,10 @@ $small-breakpoint: 960px;
       height: 52px;
     }
 
+    img {
+      width: 150px;
+    }
+
     @media screen and (max-width: $no-gap-breakpoint) {
       padding: 0;
       margin-bottom: 30px;
@@ -868,12 +872,13 @@ $small-breakpoint: 960px;
 .brand__tagline {
   display: block;
   position: absolute;
-  bottom: -10px;
-  left: 50px;
+  text-align: center;
+  left: -75px;
   width: 300px;
   color: $ui-primary-color;
   text-decoration: none;
   font-size: 14px;
+  margin-top: 20px;
 
   @media screen and (max-width: $no-gap-breakpoint) {
     position: static;

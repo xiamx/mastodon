@@ -18,7 +18,7 @@ zh-HK:
     contact_unavailable: 未公開
     discover_users: 探索使用者
     documentation: 文件
-    federation_hint_html: 你只需要擁有 %{instance} 的帳戶，就可以追蹤隨便一台 Mastodon 伺服器上的人等等。
+    federation_hint_html: 你只需要擁有 %{instance} 的帳戶，就可以追蹤隨便一台 Mastodon 伺服器或 Twitter 上的人等等。
     get_apps: 嘗試行動應用程式
     hosted_on: 在 %{domain} 運作的 Mastodon 服務站
     learn_more: 了解更多

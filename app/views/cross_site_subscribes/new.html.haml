@@ -1,0 +1,21 @@
+- content_for :page_title do
+  = t('cross_site_subscribes.create_cross_site_subscribes', title: site_title)
+
+= simple_form_for(@cross_site_subscription, url: cross_site_subscribes_path) do |f|
+
+  .flash-message= I18n.t('cross_site_subscribes.explain_after_add')
+
+  = render 'shared/error_messages', object: @cross_site_subscription
+
+  .fields-group
+    = f.input :site, wrapper: :with_label, label: I18n.t('cross_site_subscribes.site'), input_html: {readonly: :true}
+
+    = f.input :foreign_user_id, wrapper: :with_label, label: I18n.t('cross_site_subscribes.foreign_user_id'), placeholder: "@GretaotoM"
+    = f.input :sensitive, wrapper: :with_label, label: I18n.t('cross_site_subscribes.sensitive')
+    = f.input :public, wrapper: :with_label, label: I18n.t('cross_site_subscribes.media_or_influencer')
+
+  .actions
+    = f.button :button, t('cross_site_subscribes.subscribe'), type: :submit
+
+
+

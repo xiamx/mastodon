@@ -138,5 +138,15 @@ module Mastodon
       Devise::FailureApp.send :include, HttpAcceptLanguage::EasyAccess
       Devise::FailureApp.send :include, Localized
     end
+
+    Flipper.configure do |config|
+      config.default do
+        # pick an adapter, this uses memory, any will do
+        adapter = Flipper::Adapters::Redis.new(Redis.current)
+
+        # pass adapter to handy DSL instance
+        Flipper.new(adapter)
+      end
+    end
   end
 end

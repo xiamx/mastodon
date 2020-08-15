@@ -18,7 +18,7 @@ zh-CN:
     contact_unavailable: 未公开
     discover_users: 发现用户
     documentation: 文档
-    federation_hint_html: 在%{instance} 上拥有账号后，你可以关注任何 Mastodon 服务器或其他服务器上的人。
+    federation_hint_html: 在%{instance} 上拥有账号后，你可以关注任何 Mastodon 服务器或 Twitter 上的人。
     get_apps: 尝试移动应用
     hosted_on: 一个在 %{domain} 上运行的 Mastodon 实例
     instance_actor_flash: 这个账号是个虚拟帐号，不代表任何用户，只用来代表服务器本身。它用于和其它服务器互通，所以不应该被封禁，除非你想封禁整个实例。但是想封禁整个实例的时候，你应该用域名封禁。
@@ -719,6 +719,25 @@ zh-CN:
     errors:
       invalid_key: 不是有效的 Ed25519 或者 Curve25519 密钥
       invalid_signature: 不是有效的 Ed25519 签名
+  cross_site_subscribes:
+    add_by: 添加人
+    add_instagram_user: 添加 Instagram 用户
+    add_twitter_user: 添加 Twitter 用户
+    all_cross_site_users: 全部跨站用户
+    all_sites: 全部站点
+    connect_follower_twitter_user: 连接 Twitter 用户
+    create_cross_site_subscribes: 添加新跨站订阅
+    explain_after_add: 在添加该用户后，您将自动关注该用户。其在最近几个小时内的帖文将自动同步到 GretaOto。这个过程可能会有最多 30 分钟的延迟，清耐心等待。
+    foreign_user_id: 跨站用户名
+    instagram: Instagram
+    manage_cross_site_subscribes: 管理跨站订阅
+    relationship: 关系
+    sensitive: 包含敏感内容
+    media_or_influencer: 媒体或公知？
+    site: 站点
+    subscribe: 订阅
+    twitter: Twitter
+    users_added_by_me: 我添加的跨站用户
   date:
     formats:
       default: "%Y年%m月%d日"

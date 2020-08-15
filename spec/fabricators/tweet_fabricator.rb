@@ -1,0 +1,2 @@
+Fabricator(:tweet) do
+end

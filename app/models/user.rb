@@ -118,6 +118,10 @@ class User < ApplicationRecord
   attr_reader :invite_code, :sign_in_token_attempt
   attr_writer :external
 
+  def flipper_id
+    "User;#{id}"
+  end
+
   def confirmed?
     confirmed_at.present?
   end

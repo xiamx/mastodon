@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_28_133322) do
+ActiveRecord::Schema.define(version: 2020_06_28_151124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.integer "lock_version", default: 0, null: false
     t.boolean "unread", default: false, null: false
     t.index ["account_id", "conversation_id", "participant_account_ids"], name: "index_unique_conversations", unique: true
-    t.index ["conversation_id"], name: "index_account_conversations_on_conversation_id"
   end
 
   create_table "account_domain_blocks", force: :cascade do |t|
@@ -186,7 +185,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.index "lower((username)::text), COALESCE(lower((domain)::text), ''::text)", name: "index_accounts_on_username_and_domain_lower", unique: true
     t.index ["moved_to_account_id"], name: "index_accounts_on_moved_to_account_id"
     t.index ["uri"], name: "index_accounts_on_uri"
-    t.index ["url"], name: "index_accounts_on_url"
   end
 
   create_table "accounts_tags", id: false, force: :cascade do |t|
@@ -214,7 +212,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "announcement_id"], name: "index_announcement_mutes_on_account_id_and_announcement_id", unique: true
-    t.index ["announcement_id"], name: "index_announcement_mutes_on_announcement_id"
   end
 
   create_table "announcement_reactions", force: :cascade do |t|
@@ -226,7 +223,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.datetime "updated_at", null: false
     t.index ["account_id", "announcement_id", "name"], name: "index_announcement_reactions_on_account_id_and_announcement_id", unique: true
     t.index ["announcement_id"], name: "index_announcement_reactions_on_announcement_id"
-    t.index ["custom_emoji_id"], name: "index_announcement_reactions_on_custom_emoji_id"
   end
 
   create_table "announcements", force: :cascade do |t|
@@ -283,6 +279,21 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uri"], name: "index_conversations_on_uri", unique: true
+  end
+
+  create_table "cross_site_subscriptions", force: :cascade do |t|
+    t.string "site"
+    t.string "foreign_user_id"
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "sensitive"
+    t.bigint "account_id"
+    t.bigint "created_by_id"
+    t.boolean "public"
+    t.index ["account_id"], name: "index_cross_site_subscriptions_on_account_id"
+    t.index ["created_by_id"], name: "index_cross_site_subscriptions_on_created_by_id"
+    t.index ["site", "foreign_user_id"], name: "index_cross_site_subscriptions_on_site_and_foreign_user_id", unique: true
   end
 
   create_table "custom_emoji_categories", force: :cascade do |t|
@@ -381,7 +392,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
     t.bigint "status_id", null: false
-    t.index ["account_id", "id"], name: "index_favourites_on_account_id_and_id"
     t.index ["account_id", "status_id"], name: "index_favourites_on_account_id_and_status_id", unique: true
     t.index ["status_id"], name: "index_favourites_on_status_id"
   end
@@ -440,6 +450,18 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.boolean "overwrite", default: false, null: false
   end
 
+  create_table "instagram_posts", force: :cascade do |t|
+    t.string "post_id", null: false
+    t.bigint "account_id"
+    t.string "post_url"
+    t.string "full_text"
+    t.jsonb "payload"
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_instagram_posts_on_account_id"
+  end
+
   create_table "invites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "code", default: "", null: false
@@ -460,7 +482,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.bigint "follow_id"
     t.index ["account_id", "list_id"], name: "index_list_accounts_on_account_id_and_list_id", unique: true
     t.index ["follow_id"], name: "index_list_accounts_on_follow_id"
-    t.index ["list_id", "account_id"], name: "index_list_accounts_on_list_id_and_account_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -505,7 +526,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.datetime "thumbnail_updated_at"
     t.string "thumbnail_remote_url"
     t.index ["account_id"], name: "index_media_attachments_on_account_id"
-    t.index ["scheduled_status_id"], name: "index_media_attachments_on_scheduled_status_id"
     t.index ["shortcode"], name: "index_media_attachments_on_shortcode", unique: true
     t.index ["status_id"], name: "index_media_attachments_on_status_id"
   end
@@ -704,7 +724,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.datetime "scheduled_at"
     t.jsonb "params"
     t.index ["account_id"], name: "index_scheduled_statuses_on_account_id"
-    t.index ["scheduled_at"], name: "index_scheduled_statuses_on_scheduled_at"
   end
 
   create_table "session_activations", force: :cascade do |t|
@@ -828,6 +847,29 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.index ["uri"], name: "index_tombstones_on_uri"
   end
 
+  create_table "tweets", force: :cascade do |t|
+    t.bigint "tweet_id", null: false
+    t.bigint "account_id"
+    t.string "full_text"
+    t.jsonb "payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "published_at"
+    t.index ["account_id"], name: "index_tweets_on_account_id"
+    t.index ["created_at"], name: "index_tweets_on_created_at"
+    t.index ["tweet_id"], name: "index_tweets_on_tweet_id", unique: true
+  end
+
+  create_table "twitter_authentications", force: :cascade do |t|
+    t.string "access_token"
+    t.string "access_token_secret"
+    t.boolean "system_default"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_twitter_authentications_on_account_id"
+  end
+
   create_table "unavailable_domains", force: :cascade do |t|
     t.string "domain", default: "", null: false
     t.datetime "created_at", null: false
@@ -882,7 +924,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
     t.datetime "sign_in_token_sent_at"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["created_by_application_id"], name: "index_users_on_created_by_application_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -940,6 +981,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
   add_foreign_key "bookmarks", "statuses", on_delete: :cascade
   add_foreign_key "conversation_mutes", "accounts", name: "fk_225b4212bb", on_delete: :cascade
   add_foreign_key "conversation_mutes", "conversations", on_delete: :cascade
+  add_foreign_key "cross_site_subscriptions", "users", column: "created_by_id", on_delete: :nullify
   add_foreign_key "custom_filters", "accounts", on_delete: :cascade
   add_foreign_key "devices", "accounts", on_delete: :cascade
   add_foreign_key "devices", "oauth_access_tokens", column: "access_token_id", on_delete: :cascade
@@ -956,6 +998,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
   add_foreign_key "follows", "accounts", name: "fk_32ed1b5560", on_delete: :cascade
   add_foreign_key "identities", "users", name: "fk_bea040f377", on_delete: :cascade
   add_foreign_key "imports", "accounts", name: "fk_6db1b6e408", on_delete: :cascade
+  add_foreign_key "instagram_posts", "accounts", on_delete: :cascade
   add_foreign_key "invites", "users", on_delete: :cascade
   add_foreign_key "list_accounts", "accounts", on_delete: :cascade
   add_foreign_key "list_accounts", "follows", on_delete: :cascade
@@ -1000,6 +1043,8 @@ ActiveRecord::Schema.define(version: 2020_06_28_133322) do
   add_foreign_key "statuses_tags", "statuses", on_delete: :cascade
   add_foreign_key "statuses_tags", "tags", name: "fk_3081861e21", on_delete: :cascade
   add_foreign_key "tombstones", "accounts", on_delete: :cascade
+  add_foreign_key "tweets", "accounts", on_delete: :cascade
+  add_foreign_key "twitter_authentications", "accounts"
   add_foreign_key "user_invite_requests", "users", on_delete: :cascade
   add_foreign_key "users", "accounts", name: "fk_50500f500d", on_delete: :cascade
   add_foreign_key "users", "invites", on_delete: :nullify

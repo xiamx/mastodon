@@ -1757,6 +1757,10 @@
       {
         "defaultMessage": "Profile directory",
         "id": "getting_started.directory"
+      },
+      {
+        "defaultMessage": "Twitter/Instagram subscriptions",
+        "id": "getting_started.cross_site_subscribes"
       }
     ],
     "path": "app/javascript/mastodon/features/getting_started/index.json"
@@ -2957,6 +2961,10 @@
       {
         "defaultMessage": "Profile directory",
         "id": "getting_started.directory"
+      },
+      {
+        "defaultMessage": "Twitter/Instagram subscriptions",
+        "id": "navigation_bar.cross_site_subscribes"
       },
       {
         "defaultMessage": "Preferences",

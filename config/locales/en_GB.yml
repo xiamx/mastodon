@@ -20,7 +20,7 @@ en_GB:
     extended_description_html: |
       <h3>1A good place for rules</h3>2
       <p>3The extended description has not been set up yet.</p>4
-    federation_hint_html: With an account on %{instance} you'll be able to follow people on any Mastodon server and beyond.
+    federation_hint_html: With an account on %{instance} you'll be able to follow people on any Mastodon server, Twitter and beyond.
     generic_description: "%{domain} is one server in the network"
     get_apps: Try a mobile app
     hosted_on: Mastodon hosted on %{domain}
@@ -535,6 +535,16 @@ en_GB:
       return: Show the user's profile
       web: Go to web
     title: Follow %{acct}
+  cross_site_subscribes:
+    add_by: Added by
+    add_instagram_user: Add Instagram User
+    add_twitter_user: Add Twitter User
+    connect_follower_twitter_user: Connect Twitter User
+    create_cross_site_subscribes: New Cross Site Subscribe
+    foreign_user_id: Foreign User ID
+    manage_cross_site_subscribes: Manage Cross Site Subscribes
+    site: Site
+    subscribe: Subscribe
   datetime:
     distance_in_words:
       about_x_hours: "%{count}h"

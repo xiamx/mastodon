@@ -105,6 +105,13 @@ gem 'json-ld'
 gem 'json-ld-preloaded', '~> 3.1'
 gem 'rdf-normalize', '~> 0.4'
 
+gem 'twitter' , '~> 7.0'
+gem 'oauth', '~> 0.5'
+
+gem "sentry-raven", require: 'sentry-raven-without-integrations'
+gem 'flipper'
+gem 'flipper-redis'
+
 group :development, :test do
   gem 'fabrication', '~> 2.21'
   gem 'fuubar', '~> 2.5'

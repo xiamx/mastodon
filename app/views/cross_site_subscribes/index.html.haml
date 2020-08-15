@@ -1,0 +1,79 @@
+- content_for :page_title do
+  = t('cross_site_subscribes.manage_cross_site_subscribes', title: site_title)
+
+- unless @current_twitter_account.present?
+  %p= link_to t('cross_site_subscribes.connect_follower_twitter_user'), new_twitter_authentications_path, class: 'button'
+
+.flash-message= I18n.t('cross_site_subscribes.explain_after_add')
+
+%p
+  = link_to t('cross_site_subscribes.add_twitter_user'), new_cross_site_subscribe_path(site: :twitter), class: 'button'
+  - if Flipper.enabled?(:cross_site_instagram, current_user)
+    = link_to t('cross_site_subscribes.add_instagram_user'), new_cross_site_subscribe_path(site: :instagram), class: 'button'
+  - if Flipper.enabled?(:cross_site_bilibili, current_user)
+    = link_to t('cross_site_subscribes.add_bilibili_user'), new_cross_site_subscribe_path(site: :bilibili), class: 'button'
+
+%hr
+
+.filters
+  .filter-subset
+    %strong= t 'cross_site_subscribes.relationship'
+    %ul
+      %li= filter_link_to t('cross_site_subscribes.all_cross_site_users'), relationship: nil
+      %li= filter_link_to t('cross_site_subscribes.users_added_by_me'), relationship: :added_by_me
+
+  .filter-subset
+    %strong= t('cross_site_subscribes.site')
+    %ul
+      %li= filter_link_to t('cross_site_subscribes.all_sites'), location: :all
+      %li= filter_link_to t('cross_site_subscribes.twitter'), location: :twitter
+      %li= filter_link_to t('cross_site_subscribes.instagram'), location: :instagram
+
+= form_tag cross_site_subscribes_url, method: 'GET', class: 'simple_form' do
+  .fields-group
+    - AccountFilter::KEYS.each do |key|
+      - if params[key].present?
+        = hidden_field_tag key, params[key]
+
+    - %i(username).each do |key|
+      - unless key == :by_domain && params[:remote].blank?
+        .input.string.optional
+          = text_field_tag key, params[key], class: 'string optional', placeholder: I18n.t("admin.accounts.#{key}")
+
+    .actions
+      %button= t('admin.accounts.search')
+      = link_to t('admin.accounts.reset'), admin_accounts_path, class: 'button negative'
+
+%table.table.table--invites
+  %thead
+    %tr
+      %th
+      %th= t('cross_site_subscribes.site')
+      %th= t('cross_site_subscribes.foreign_user_id')
+      - if policy(:cross_site_subscription).show_created_by?
+        %th= t('cross_site_subscribes.add_by')
+      %th
+  %tbody
+    - @cross_site_subscriptions.each do |subscription|
+      %tr
+        %td= subscription.id
+        %td= link_to subscription.site, subscription.site_user_url
+        - if subscription.account.nil?
+          %td= subscription.pretty_acct
+        - else
+          %td= link_to subscription.pretty_acct, account_url(subscription.account)
+        - if policy(:cross_site_subscription).show_created_by?
+          - if subscription.created_by&.account&.present?
+            %td= link_to "@#{subscription.created_by&.account&.pretty_acct}", account_path(subscription.created_by&.account)
+          - else
+            %td= "User deleted"
+        - if subscription.account.present?
+          %td
+            = account_action_button(subscription.account)
+            - if policy(:cross_site_subscription).destroy?
+              = link_to "delete", "#{cross_site_subscribes_path}/#{subscription.id}", method: :delete, data: {confirm: "are you sure?"}
+        - else
+          %td
+
+= paginate @cross_site_subscriptions
+

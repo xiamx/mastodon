@@ -120,6 +120,7 @@ GEM
       msgpack (~> 1.0)
     brakeman (4.8.2)
     browser (4.2.0)
+    buftok (0.2.0)
     builder (3.2.4)
     bullet (6.1.0)
       activesupport (>= 3.0.0)
@@ -213,6 +214,7 @@ GEM
       faraday (~> 1)
       multi_json
     encryptor (3.0.0)
+    equalizer (0.0.11)
     equatable (0.6.1)
     erubi (1.9.0)
     et-orbi (1.2.4)
@@ -229,6 +231,10 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    flipper (0.17.2)
+    flipper-redis (0.17.2)
+      flipper (~> 0.17.2)
+      redis (>= 2.2, < 5)
     fog-core (2.1.0)
       builder
       excon (~> 0.58)
@@ -353,6 +359,8 @@ GEM
       mimemagic (~> 0.3.2)
     mario-redis-lock (1.2.1)
       redis (>= 3.0.5)
+    memoizable (0.4.2)
+      thread_safe (~> 0.3, >= 0.3.1)
     memory_profiler (0.9.14)
     method_source (1.0.0)
     microformats (4.2.0)
@@ -368,6 +376,7 @@ GEM
     msgpack (1.3.3)
     multi_json (1.14.1)
     multipart-post (2.1.1)
+    naught (1.1.0)
     necromancer (0.5.1)
     net-ldap (0.16.2)
     net-scp (3.0.0)
@@ -383,6 +392,7 @@ GEM
       concurrent-ruby (~> 1.0, >= 1.0.2)
       sidekiq (>= 3.5)
       statsd-ruby (~> 1.4, >= 1.4.0)
+    oauth (0.5.4)
     oj (3.10.6)
     omniauth (1.9.1)
       hashie (>= 3.4.6)
@@ -569,6 +579,8 @@ GEM
       nokogiri (>= 1.8.0)
       nokogumbo (~> 2.0)
     semantic_range (2.3.0)
+    sentry-raven (3.0.0)
+      faraday (>= 1.0)
     sidekiq (6.1.0)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -591,6 +603,7 @@ GEM
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
+    simple_oauth (0.3.1)
     simplecov (0.18.5)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -632,6 +645,17 @@ GEM
       tty-screen (~> 0.7)
       wisper (~> 2.0.0)
     tty-screen (0.8.0)
+    twitter (7.0.0)
+      addressable (~> 2.3)
+      buftok (~> 0.2.0)
+      equalizer (~> 0.0.11)
+      http (~> 4.0)
+      http-form_data (~> 2.0)
+      http_parser.rb (~> 0.6.0)
+      memoizable (~> 0.4.0)
+      multipart-post (~> 2.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.3.0)
     twitter-text (1.14.7)
       unf (~> 0.1.0)
     tzinfo (1.2.7)
@@ -705,6 +729,8 @@ DEPENDENCIES
   faker (~> 2.13)
   fast_blank (~> 1.0)
   fastimage
+  flipper
+  flipper-redis
   fog-core (<= 2.1.0)
   fog-openstack (~> 0.3)
   fuubar (~> 2.5)
@@ -736,6 +762,7 @@ DEPENDENCIES
   nilsimsa!
   nokogiri (~> 1.10)
   nsa (~> 0.2)
+  oauth (~> 0.5)
   oj (~> 3.10)
   omniauth (~> 1.9)
   omniauth-cas (~> 1.1)
@@ -775,6 +802,7 @@ DEPENDENCIES
   rubocop-rails (~> 2.6)
   ruby-progressbar (~> 1.10)
   sanitize (~> 5.2)
+  sentry-raven
   sidekiq (~> 6.0)
   sidekiq-bulk (~> 0.2.0)
   sidekiq-scheduler (~> 3.0)
@@ -791,8 +819,15 @@ DEPENDENCIES
   thor (~> 0.20)
   thwait (~> 0.1.0)
   tty-prompt (~> 0.21)
+  twitter (~> 7.0)
   twitter-text (~> 1.14)
   tzinfo-data (~> 1.2020)
   webmock (~> 3.8)
   webpacker (~> 5.1)
   webpush
+
+RUBY VERSION
+   ruby 2.6.6p146
+
+BUNDLED WITH
+   2.1.4

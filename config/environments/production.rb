@@ -111,5 +111,17 @@ Rails.application.configure do
     'X-XSS-Protection'       => '1; mode=block',
   }
 
+  Raven.inject_without(:sidekiq)
+
+  Raven.configure do |config|
+    config.dsn = ENV.fetch('RAVEN_DSN')
+    config.async = lambda { |event|
+      SentryWorker.perform_async(event)
+    }
+    config.processors -= [Raven::Processor::PostData] # Do this to send POST data
+    config.processors -= [Raven::Processor::Cookies] # Do this to send cookies by default
+    config.excluded_exceptions += %w[HTTP::TimeoutError HTTP::ConnectionError OpenSSL::SSL::SSLError Stoplight::Error::RedLight ProofProvider::Keybase::ExpectedProofLiveError]
+  end
+
   config.x.otp_secret = ENV.fetch('OTP_SECRET')
 end
