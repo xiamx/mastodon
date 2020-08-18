@@ -259,47 +259,51 @@ export default class StatusContent extends React.PureComponent {
       </button>
     );
 
-    const translationContainer = (
-      (<React.Fragment>
-        <button
-          tabIndex='-1' className={'status__content__show-translation-button'}
-          onClick={this.handleTranslationClick.bind(this)}
-        >{toggleTranslation}</button>
+    const translationContainer = (() => {
+      if (localStorage.getItem('translationEnabled') === 'yes') {
+        return (<React.Fragment>
+          <button
+            tabIndex='-1' className={'status__content__show-translation-button'}
+            onClick={this.handleTranslationClick.bind(this)}
+          >{toggleTranslation}</button>
 
-        {/* error message */}
-        <div className='translation-content__wrapper'>
-          <section
-            className={`translation-content__failed ${this.state.translationStatus === 'failed' ? 'display' : 'hidden'}`}
-          >
-            <p><FormattedMessage id='status.translation_failed' defaultMessage='Fetch translation failed' /></p>
-          </section>
-          <section
-            className={`translation-content__loading ${this.state.translationStatus === 'fetching' ? 'display' : 'hidden'}`}
-          >
-            <div className='spinner'>
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            {/* <p>Fetching translation, please wait</p> */}
-          </section>
-          <section
-            className={`translation-content__succeed ${this.state.translationStatus === 'succeed' && !this.state.hideTranslation ? 'display' : 'hidden'}`}
-          >
-            <p className='translation-content__powered-by'>
-              <FormattedMessage
-                id='status.translation_by' defaultMessage='Translation powered by {google}'
-                values={{
-                  google: <img alt='Google' draggable='false' src={googleLogo} />,
-                }}
-              />
-            </p>
-            <p className='translation-content'>{this.state.translation}</p>
-          </section>
-        </div>
-      </React.Fragment>)
-    );
+          {/* error message */}
+          <div className='translation-content__wrapper'>
+            <section
+              className={`translation-content__failed ${this.state.translationStatus === 'failed' ? 'display' : 'hidden'}`}
+            >
+              <p><FormattedMessage id='status.translation_failed' defaultMessage='Fetch translation failed' /></p>
+            </section>
+            <section
+              className={`translation-content__loading ${this.state.translationStatus === 'fetching' ? 'display' : 'hidden'}`}
+            >
+              <div className='spinner'>
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+              {/* <p>Fetching translation, please wait</p> */}
+            </section>
+            <section
+              className={`translation-content__succeed ${this.state.translationStatus === 'succeed' && !this.state.hideTranslation ? 'display' : 'hidden'}`}
+            >
+              <p className='translation-content__powered-by'>
+                <FormattedMessage
+                  id='status.translation_by' defaultMessage='Translation powered by {google}'
+                  values={{
+                    google: <img alt='Google' draggable='false' src={googleLogo} />,
+                  }}
+                />
+              </p>
+              <p className='translation-content'>{this.state.translation}</p>
+            </section>
+          </div>
+        </React.Fragment>);
+      } else {
+        return null;
+      }
+    })();
 
     if (status.get('spoiler_text').length > 0) {
       let mentionsPlaceholder = '';
