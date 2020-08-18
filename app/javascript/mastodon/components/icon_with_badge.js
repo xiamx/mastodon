@@ -13,7 +13,7 @@ const IconWithBadge = ({ id, count, className }) => (
 
 IconWithBadge.propTypes = {
   id: PropTypes.string.isRequired,
-  count: PropTypes.number.isRequired,
+  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   className: PropTypes.string,
 };
 
