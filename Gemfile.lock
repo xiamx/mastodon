@@ -644,7 +644,7 @@ GEM
       tty-cursor (~> 0.7)
       tty-screen (~> 0.7)
       wisper (~> 2.0.0)
-    tty-screen (0.8.0)
+    tty-screen (0.8.1)
     twitter (7.0.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
