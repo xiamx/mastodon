@@ -9,7 +9,7 @@
 .landing
   .landing__brand
     = link_to root_url, class: 'brand' do
-      = image_tag @instance_presenter.mascot&.file&.url
+      = image_tag @instance_presenter.mascot&.file&.url || asset_pack_path('media/images/elephant_ui_plane.svg'), alt: ''
       %span.brand__tagline=t 'about.tagline'
 
   .landing__grid
