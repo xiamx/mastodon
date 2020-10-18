@@ -2,3 +2,6 @@ default: styles/application.scss
 contrast: styles/contrast.scss
 mastodon-light: styles/mastodon-light.scss
 light-green: styles/light-green.scss
+transparent-starry-sky: styles/transparent-starry-sky.scss
+transparent-forest-trace: styles/transparent-forest-trace.scss
+transparent-aurora: styles/transparent-aurora.scss
