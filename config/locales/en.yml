@@ -1275,6 +1275,10 @@ en:
     contrast: Mastodon (High contrast)
     default: Mastodon (Dark)
     mastodon-light: Mastodon (Light)
+    light-green: Light Green
+    transparent-starry-sky: Starry Sky
+    transparent-forest-trace: Forest Trace
+    transparent-aurora: Aurora
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
