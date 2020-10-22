@@ -73,13 +73,12 @@ class CrossSiteInstagram
   def process_attachments(post_db_obj)
     account = post_db_obj.account
     payload = ActiveSupport::JSON.decode(post_db_obj.payload)
-    media_array = payload['attachments']
-    return [] if media_array.blank?
+    p = Nokogiri::HTML.parse(payload["summary"])
+    image_array = p.css('img').map do |i| i[:src] end
+    video_array = []
+    return [] if image_array.blank?
 
     media_attachments = []
-
-    video_array = media_array.select { |media| media['mime_type'] == 'video/mp4' }
-    image_array = media_array.select { |media| media['mime_type'] == 'image/jpeg' }
 
     media_array = if !video_array.empty?
                     [video_array.first]
@@ -88,18 +87,14 @@ class CrossSiteInstagram
                   end
 
     media_array.each do |media|
-      next if media['url'].blank? || media_attachments.size >= 4
+      next if media_attachments.size >= 4
 
-      begin
-        href             = Addressable::URI.parse(media['url']).normalize.to_s
-        media_attachment = MediaAttachment.create(account: account, remote_url: href)
-        media_attachments << media_attachment
+      href             = Addressable::URI.parse(media).normalize.to_s
+      media_attachment = MediaAttachment.create(account: account, remote_url: href)
+      media_attachment.download_file!
+      media_attachments << media_attachment
 
-        media_attachment.file_remote_url = href
-        media_attachment.save
-      rescue Mastodon::UnexpectedResponseError, HTTP::TimeoutError, HTTP::ConnectionError, OpenSSL::SSL::SSLError
-        RedownloadMediaWorker.perform_in(rand(30..600).seconds, media_attachment.id)
-      end
+      media_attachment.save!
     end
 
     media_attachments
@@ -109,22 +104,18 @@ class CrossSiteInstagram
   end
 
   def persist_or_find_post!(post, account)
-    full_text = if post['title'].present?
-                  "#{post['title']} #{post['url']}"
-                else
-                  post['url']
-                end
-    post_db_obj = InstagramPost.find_by(post_id: post['id'])
+    full_text = "#{post.title} #{post.url}"
+    post_db_obj = InstagramPost.find_by(post_id: post.id)
     return post_db_obj if post_db_obj.present?
 
-    InstagramPost.create!(post_id: post['id'], full_text: full_text, account: account, payload: JSON.dump(post))
+    InstagramPost.create!(post_id: post.id, full_text: full_text, account: account, payload: ActiveSupport::JSON.encode(post.to_h))
   end
 
   def feed_items(instagram_user_id)
-    JSON.parse(
-      Net::HTTP.get(
-        URI.parse(@rss_bridge_host + "/?action=display&bridge=Instagram&context=Username&u=#{instagram_user_id}&media_type=all&format=Json")
-      )
-    )['items']
+    xml = Faraday.get(
+        "#{@rss_bridge_host}/picuki/profile/#{instagram_user_id}"
+    ).body
+    feed = Feedjira.parse(xml)
+    feed.entries
   end
 end
