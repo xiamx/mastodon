@@ -65,7 +65,7 @@ class CrossSiteInstagram
     account = post_db_obj.account
 
     media_attachments = process_attachments(post_db_obj)
-    PostStatusService.new.call(account, text: post_db_obj.full_text, media_ids: media_attachments.map(&:id))
+    PostStatusService.new.call(account, text: post_db_obj.full_text, media_ids: media_attachments.map(&:id), visibility: "unlisted")
     ActivityTracker.record('activity:logins', account.user.id)
     post_db_obj.publish!
   end
@@ -105,10 +105,10 @@ class CrossSiteInstagram
 
   def persist_or_find_post!(post, account)
     full_text = "#{post.title} #{post.url}"
-    post_db_obj = InstagramPost.find_by(post_id: post.id)
+    post_db_obj = RssPost.find_by(post_id: post.id)
     return post_db_obj if post_db_obj.present?
 
-    InstagramPost.create!(post_id: post.id, full_text: full_text, account: account, payload: ActiveSupport::JSON.encode(post.to_h))
+    RssPost.create!(post_id: post.id, full_text: full_text, account: account, payload: ActiveSupport::JSON.encode(post.to_h))
   end
 
   def feed_items(instagram_user_id)
