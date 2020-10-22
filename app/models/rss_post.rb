@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: instagram_posts
+# Table name: rss_posts
 #
 #  id           :bigint(8)        not null, primary key
 #  post_id      :string           not null
@@ -12,7 +12,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
-class InstagramPost < ApplicationRecord
+class RssPost < ApplicationRecord
   belongs_to :account
 
   scope :unpublished, -> { where("published_at is not null") }

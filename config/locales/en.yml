@@ -732,6 +732,7 @@ en:
   cross_site_subscribes:
     add_by: Added by
     add_instagram_user: Add Instagram User
+    add_bilibili_user: Add Bilibili User
     add_twitter_user: Add Twitter User
     all_sites: All sites
     connect_follower_twitter_user: Connect Twitter User

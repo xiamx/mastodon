@@ -8,11 +8,11 @@ class SubscribeCrossSiteUserService < BaseService
       cross_site_twitter.follow(cross_site_subscription.foreign_user_id)
       target_account = cross_site_twitter.create_account_if_not_exist(cross_site_subscription)
       FollowService.new.call(source_account, target_account)
-    when 'instagram'
-      cross_site_instagram = CrossSiteInstagram.new
-      target_account = cross_site_instagram.create_account_if_not_exist(cross_site_subscription)
+    else
+      cross_site_generic = CrossSiteGeneric.new(cross_site_subscription.site)
+      target_account = cross_site_generic.create_account_if_not_exist(cross_site_subscription)
       FollowService.new.call(source_account, target_account)
-      UpdateInstagramPostsWorker.perform_async(cross_site_subscription.id)
+      UpdateRssPostsWorker.perform_async(cross_site_subscription.site, cross_site_subscription.id)
     end
   end
 end

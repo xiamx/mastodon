@@ -58,9 +58,7 @@ class CrossSiteAccountCreator
           }
         ]
 
-      end
-
-      if site == 'instagram'
+      elsif site == 'instagram'
         account.fields = [
 
           {
@@ -70,6 +68,12 @@ class CrossSiteAccountCreator
           }
         ]
 
+      else
+        account.fields = [
+            {
+                name: 'Status', value: 'Cross-Site-Subscribed account: unclaimed'
+            }
+        ]
       end
       account.header_remote_url = banner_uri if banner_uri.present?
       account.avatar_remote_url = avatar_uri if avatar_uri.present?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_28_151124) do
+ActiveRecord::Schema.define(version: 2020_10_22_170517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -450,18 +450,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_151124) do
     t.boolean "overwrite", default: false, null: false
   end
 
-  create_table "instagram_posts", force: :cascade do |t|
-    t.string "post_id", null: false
-    t.bigint "account_id"
-    t.string "post_url"
-    t.string "full_text"
-    t.jsonb "payload"
-    t.datetime "published_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_instagram_posts_on_account_id"
-  end
-
   create_table "invites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "code", default: "", null: false
@@ -717,6 +705,18 @@ ActiveRecord::Schema.define(version: 2020_06_28_151124) do
     t.string "uri"
     t.index ["account_id"], name: "index_reports_on_account_id"
     t.index ["target_account_id"], name: "index_reports_on_target_account_id"
+  end
+
+  create_table "rss_posts", force: :cascade do |t|
+    t.string "post_id", null: false
+    t.bigint "account_id"
+    t.string "post_url"
+    t.string "full_text"
+    t.jsonb "payload"
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_rss_posts_on_account_id"
   end
 
   create_table "scheduled_statuses", force: :cascade do |t|
@@ -998,7 +998,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_151124) do
   add_foreign_key "follows", "accounts", name: "fk_32ed1b5560", on_delete: :cascade
   add_foreign_key "identities", "users", name: "fk_bea040f377", on_delete: :cascade
   add_foreign_key "imports", "accounts", name: "fk_6db1b6e408", on_delete: :cascade
-  add_foreign_key "instagram_posts", "accounts", on_delete: :cascade
   add_foreign_key "invites", "users", on_delete: :cascade
   add_foreign_key "list_accounts", "accounts", on_delete: :cascade
   add_foreign_key "list_accounts", "follows", on_delete: :cascade
@@ -1030,6 +1029,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_151124) do
   add_foreign_key "reports", "accounts", column: "assigned_account_id", on_delete: :nullify
   add_foreign_key "reports", "accounts", column: "target_account_id", name: "fk_eb37af34f0", on_delete: :cascade
   add_foreign_key "reports", "accounts", name: "fk_4b81f7522c", on_delete: :cascade
+  add_foreign_key "rss_posts", "accounts", on_delete: :cascade
   add_foreign_key "scheduled_statuses", "accounts", on_delete: :cascade
   add_foreign_key "session_activations", "oauth_access_tokens", column: "access_token_id", name: "fk_957e5bda89", on_delete: :cascade
   add_foreign_key "session_activations", "users", name: "fk_e5fda67334", on_delete: :cascade

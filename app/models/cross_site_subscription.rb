@@ -15,7 +15,7 @@
 #  public          :boolean
 #
 class CrossSiteSubscription < ApplicationRecord
-  WHITELISTED_SITES = %w[twitter instagram]
+  WHITELISTED_SITES = %w[twitter instagram bilibili]
 
   belongs_to :created_by, class_name: "User", optional: true
   belongs_to :account, optional: true
@@ -63,10 +63,8 @@ class CrossSiteSubscription < ApplicationRecord
     case site
     when 'twitter'
       foreign_user_id.downcase.gsub('.', '_')
-    when 'instagram'
-      foreign_user_id.downcase.gsub('.', '_') + "_" + shorten_site
     else
-      foreign_user_id.downcase
+      foreign_user_id.downcase.gsub('.', '_') + "_" + shorten_site
     end
   end
 

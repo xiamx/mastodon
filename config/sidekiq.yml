@@ -39,9 +39,9 @@
   update_tweets_scheduler:
     cron: '*/5 * * * *'
     class: Scheduler::UpdateTweetsScheduler
-  update_instagram_posts_scheduler:
-    every: '30m'
-    class: Scheduler::UpdateInstagramPosts
+  update_rss_posts_scheduler:
+    every: '90m'
+    class: Scheduler::UpdateRssPosts
   sync_cross_site_follows_scheduler:
     cron: '*/30 * * * *'
     class: Scheduler::SyncCrossSiteFollows
