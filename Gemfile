@@ -111,6 +111,7 @@ gem 'oauth', '~> 0.5'
 
 gem "sentry-raven", require: 'sentry-raven-without-integrations'
 gem 'flipper'
+gem 'flipper-ui'
 gem 'flipper-redis'
 
 group :development, :test do
