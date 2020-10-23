@@ -68,6 +68,20 @@ class CrossSiteAccountCreator
           }
         ]
 
+      elsif site == 'bilibili'
+        account.fields = [
+            {
+                name: 'bilibili', value: "https://space.bilibili.com/#{cross_site_subscription.foreign_user_id}/dynamic"
+            }, {
+                name: 'Status', value: 'Cross-Site-Subscribed account: unclaimed'
+            }
+        ]
+        info_url = "https://api.bilibili.com/x/space/acc/info?mid=#{cross_site_subscription.foreign_user_id}&jsonp=jsonp"
+        info_h = ActiveSupport::JSON.decode(Faraday.get(info_url).body)
+        if info_h.present?
+          @banner_uri = info_h.dig('data', 'top_photo')
+          @avatar_uri = info_h.dig('data', 'face')
+        end
       else
         account.fields = [
             {
