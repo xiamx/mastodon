@@ -7,6 +7,14 @@
 
   = render 'shared/error_messages', object: @cross_site_subscription
 
+  - if params['site'] == 'bilibili'
+    %p
+      请勿添加 《BanG Dream!》、 《Princess Connect! 公主连结》、 《Arknight 明日方舟》 的 BiliBili 鏡像。你可以在
+      %a{href:'http://bot-hello.2heng.xin/'} http://bot-hello.2heng.xin/
+      找到已有的鏡像賬號
+      %br
+      %br
+
   .fields-group
     = f.input :site, wrapper: :with_label, label: I18n.t('cross_site_subscribes.site'), input_html: {readonly: :true}
 
