@@ -11,7 +11,7 @@ base_host = Rails.configuration.x.web_domain
 assets_host   = Rails.configuration.action_controller.asset_host
 assets_host ||= host_to_url(base_host)
 
-analytics_host = "https://media.gretaoto.ca https://analytics.gretaoto.ca http://analytics.gretaoto.ca"
+analytics_host = "http://media.gretaoto.ca https://media.gretaoto.ca https://analytics.gretaoto.ca http://analytics.gretaoto.ca"
 
 media_host   = host_to_url(ENV['S3_ALIAS_HOST'])
 media_host ||= host_to_url(ENV['S3_CLOUDFRONT_HOST'])
