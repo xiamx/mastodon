@@ -138,7 +138,7 @@ class GettingStarted extends ImmutablePureComponent {
       <ColumnLink key='bookmark' icon='bookmark' text={intl.formatMessage(messages.bookmarks)} to='/bookmarks' />,
       <ColumnLink key='favourites' icon='star' text={intl.formatMessage(messages.favourites)} to='/favourites' />,
       <ColumnLink key='lists' icon='list-ul' text={intl.formatMessage(messages.lists)} to='/lists' />,
-      <ColumnLink key={i++} icon='globe' text={intl.formatMessage(messages.cross_site_subscribes)} href='/cross_site_subscribes' />,
+      <ColumnLink key='crosssite' icon='globe' text={intl.formatMessage(messages.cross_site_subscribes)} href='/cross_site_subscribes' />,
     );
 
     height += 48*5;
