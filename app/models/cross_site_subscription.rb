@@ -86,6 +86,6 @@ class CrossSiteSubscription < ApplicationRecord
     else
       # do nothing
     end
-    SuspendAccountService.new.call(account, reserve_email: false) if account.present?
+    SuspendAccountService.new.call(account) if account.present?
   end
 end
