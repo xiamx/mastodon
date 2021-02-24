@@ -23,7 +23,7 @@ module Mastodon
     def remove
       CrossSiteSubscription.find_each do |sub|
         account = sub.account
-        account.statuses.where("created_at < NOW() - interval '14' days").find_each do | status |
+        account.statuses.where("created_at < NOW() - interval '14 days'").find_each do | status |
           RemoveStatusService.new.call(status, immediate: true )
           say("Removing status #{status.id} of #{account.username}", :green)
         end
