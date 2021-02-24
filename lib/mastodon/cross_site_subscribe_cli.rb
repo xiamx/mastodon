@@ -21,7 +21,7 @@ module Mastodon
 
     desc 'remove', 'remove all old content (older than 14 days'
     def remove
-      parallelize_with_progress(CrossSiteSubscription) do |sub|
+      CrossSiteSubscription.find_each do |sub|
         account = sub.account
         account.statuses.where("created_at < NOW() - interval '14' days").find_each do | status |
           RemoveStatusService.new.call(status, immediate: true )
