@@ -19,6 +19,19 @@ module Mastodon
       say('OK', :green)
     end
 
+    desc 'remove', 'remove all old content (older than 14 days'
+    def remove
+      parallelize_with_progress(CrossSiteSubscription) do |sub|
+        account = sub.account
+        account.statuses.where("created_at < NOW() - interval '14' days").find_each do | status |
+          RemoveStatusService.new.call(status, immediate: true )
+          say("Removing status #{status.id} of #{account.username}", :green)
+        end
+        next if account.nil?
+      end
+      say('OK', :green)
+    end
+
     option :all, type: :boolean
     option :concurrency, type: :numeric, default: 5, aliases: [:c]
     desc 'mute [SITE] [foreign_user_id]', 'mute a cross site subscribed user'
