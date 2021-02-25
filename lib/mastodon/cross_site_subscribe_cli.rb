@@ -25,6 +25,7 @@ module Mastodon
       parallelize_with_progress(CrossSiteSubscription) do |sub|
         account = sub.account
         account.statuses.where("created_at < NOW() - interval '14 days'").find_each do | status |
+          sleep(10) if Sidekiq::Stats.new.enqueued > 200
           status.discard
           RemovalWorker.perform_async(status.id, immediate: true)
           say("Removing status #{status.id} of #{account.username}", :green)
