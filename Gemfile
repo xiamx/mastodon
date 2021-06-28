@@ -99,7 +99,7 @@ gem 'webpacker', '~> 5.2'
 gem 'webpush'
 gem 'webauthn', '~> 3.0.0.alpha1'
 
-gem 'feedjira', '~> 3.1'
+gem 'feedjira', '~> 3.2'
 
 gem 'json-ld'
 gem 'json-ld-preloaded', '~> 3.1'
